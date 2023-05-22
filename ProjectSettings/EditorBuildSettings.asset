@@ -6,12 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 8102da2735a3b9d46a80aedab6982038
+  - enabled: 1
     path: Assets/Scenes/VR_Room_Interior.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/Scene 1_lds.unity
+    guid: 9648753495669cb439790087416c019f
+  - enabled: 0
+    path: Assets/Scenes/Scene 2_lds.unity
+    guid: 87a2fb5e9e89e104e876c6cf5e01eaca
+  - enabled: 0
+    path: Assets/Scenes/Scene 3_lds.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2bee13c1b75524f4dbe61437a6882237,
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ed72be55522c8448bae8b0d66fa21adf,
       type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 022dc622a8590fb4fb503cbbd79a9f59,
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: ad4050bc0deda4e238354e959df0f1f4,
       type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 377988a8b8573244d8f56020b2cddc04,
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: b53b89ca9241447b0a56ff61fa931615,
+      type: 2}
+    xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: f4f50c8f8f3454c90a388877cf1a2c81,
       type: 2}

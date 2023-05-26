@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 2775073}
   - component: {fileID: 2775072}
   - component: {fileID: 2775070}
-  - component: {fileID: 2775079}
   - component: {fileID: 2775069}
   - component: {fileID: 2775078}
   m_Layer: 0
@@ -387,22 +386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b71fd6d2f59604ead4c8d146373456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2775079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2775068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cf9431175a2c0847a8ccb9d67102337, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliderCnt: 0
-  layerFloor: 0
-  originalMat: {fileID: 0}
-  RedFurniture: {fileID: 0}
 --- !u!1 &139200557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1536,6 @@ GameObject:
   - component: {fileID: 884146732}
   - component: {fileID: 884146731}
   - component: {fileID: 884146730}
-  - component: {fileID: 884146736}
   - component: {fileID: 884146729}
   - component: {fileID: 884146735}
   m_Layer: 0
@@ -1804,22 +1786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b71fd6d2f59604ead4c8d146373456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &884146736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884146726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cf9431175a2c0847a8ccb9d67102337, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliderCnt: 0
-  layerFloor: 0
-  originalMat: {fileID: 0}
-  RedFurniture: {fileID: 0}
 --- !u!850595691 &920516660
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -2283,7 +2249,6 @@ GameObject:
   - component: {fileID: 1563011886}
   - component: {fileID: 1563011885}
   - component: {fileID: 1563011890}
-  - component: {fileID: 1563011894}
   - component: {fileID: 1563011889}
   - component: {fileID: 1563011893}
   m_Layer: 0
@@ -2534,22 +2499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b71fd6d2f59604ead4c8d146373456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1563011894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563011883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cf9431175a2c0847a8ccb9d67102337, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliderCnt: 0
-  layerFloor: 0
-  originalMat: {fileID: 0}
-  RedFurniture: {fileID: 0}
 --- !u!1 &1564490818
 GameObject:
   m_ObjectHideFlags: 0

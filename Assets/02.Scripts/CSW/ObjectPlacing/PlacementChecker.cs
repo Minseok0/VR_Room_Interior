@@ -18,25 +18,25 @@ public class PlacementChecker : MonoBehaviour
     {
         layerFloor = 6;
         colliderList = new List<Collider>();
-        originalMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/Materials/Furniture.mat");
-        RedFurniture = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/Materials/RedFurniture.mat");
+        originalMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/CSW/Materials/Furniture.mat");
+        RedFurniture = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/CSW/Materials/RedFurniture.mat");
     }
 
     private void SetMaterial(Material mat)
     {
-        this.GetComponent<Renderer>().material = mat;
+        this.GetComponent<MeshRenderer>().material = mat;
 
-        foreach (Transform tr_Child in this.transform)
+        /*foreach (Transform tr_Child in this.transform)
         {
-            Material[] newMaterials = new Material[tr_Child.GetComponent<Renderer>().materials.Length];
+            Material[] newMaterials = new Material[tr_Child.GetComponent<MeshRenderer>().materials.Length];
 
             for (int i = 0; i < newMaterials.Length; i++)
             {
                 newMaterials[i] = mat;
             }
 
-            tr_Child.GetComponent<Renderer>().materials = newMaterials;
-        }
+            tr_Child.GetComponent<MeshRenderer>().materials = newMaterials;
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)

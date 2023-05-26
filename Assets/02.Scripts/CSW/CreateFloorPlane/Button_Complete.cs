@@ -56,7 +56,7 @@ public class Button_Complete : MonoBehaviour
         //mesh.RecalculateBounds();
         mesh.RecalculateNormals();
 
-        AssetDatabase.CreateAsset(mesh, "Assets/03.Prefabs/FloorPlanes/Meshes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".asset"); // 메쉬를 Asset으로 저장
+        AssetDatabase.CreateAsset(mesh, "Assets/03.Prefabs/CSW/FloorPlanes/Meshes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".asset"); // 메쉬를 Asset으로 저장
        //Assets / 03.Prefabs / FloorPlanes / Meshes 
         meshFilter = newFloorPrefab.GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
@@ -64,7 +64,7 @@ public class Button_Complete : MonoBehaviour
         meshCollider = newFloorPrefab.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
 
-        string prefabPath = "Assets/03.Prefabs/FloorPlanes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".prefab";
+        string prefabPath = "Assets/03.Prefabs/CSW/FloorPlanes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".prefab";
         PrefabUtility.SaveAsPrefabAsset(newFloorPrefab, prefabPath);
 
         Destroy(newFloorPrefab);

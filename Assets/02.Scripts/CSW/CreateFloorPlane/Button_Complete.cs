@@ -8,6 +8,9 @@ public class Button_Complete : MonoBehaviour
     public Data_FloorCreatePlane data_FloorCreatePlane;
     public Data_FloorCount data_FloorCount;
 
+    public GameObject newFloorPrefab;
+    public GameObject wallPrefab;
+
     public Vector3 newFloorCenter;
 
     public List<int> triangles;
@@ -15,6 +18,9 @@ public class Button_Complete : MonoBehaviour
     private Mesh mesh;
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
+
+    public float wallHeight;
+
 
     // modifying 데이터들 clear
     private void ClearModifying()
@@ -36,7 +42,7 @@ public class Button_Complete : MonoBehaviour
     private void CreateNewFloorPrefab()
     {
         newFloorCenter = Vector3.zero;
-        GameObject newFloorPrefab = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        newFloorPrefab = GameObject.CreatePrimitive(PrimitiveType.Plane);
 
         mesh = new Mesh();
 
@@ -63,6 +69,8 @@ public class Button_Complete : MonoBehaviour
 
         meshCollider = newFloorPrefab.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
+
+        CreateWalls(newVertices_translated);
 
         string prefabPath = "Assets/03.Prefabs/CSW/FloorPlanes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".prefab";
         PrefabUtility.SaveAsPrefabAsset(newFloorPrefab, prefabPath);
@@ -215,22 +223,30 @@ public class Button_Complete : MonoBehaviour
     }
 
     // Make walls _ 벽 생성
-    private void CreateWalls()
+    private void CreateWalls(List<Vector3> newVertices)
     {
-        
-        // Vector3 wallLeftPoint; 
-        // Vector3 wallRightPoint;
-        Quaternion wallRotation; // 벽 방향
 
-        int wallCount = data_FloorCreatePlane.newVertices.Count;
-
-        //벽
+        int wallCount = newVertices.Count; // # of walls == # of vertices
+        Vector3 wallPosition;
         for (int i=0; i< wallCount; i++)
         {
-            // 벽 생성 위치
-            Vector3 wallPosition = (data_FloorCreatePlane.newVertices[i % wallCount] + data_FloorCreatePlane.newVertices[(i + 1) % wallCount]) / 2;
 
+            Vector3 currentPoint = newVertices[i];
+            Vector3 nextPoint = newVertices[(i + 1) % newVertices.Count]; // 다음 점 (마지막 점일 경우 첫 번째 점으로 연결)
 
+            // 벽의 위치 계산 (점과 점 사이의 중간 지점)
+            wallPosition = (currentPoint + nextPoint) / 2f;
+            // 벽의 높이로 y 좌표를 조절
+            wallPosition.y = wallHeight/2; 
+
+            // 벽의 회전 계산 (점과 점 사이의 방향 벡터를 이용)
+            Quaternion wallRotation = Quaternion.LookRotation(nextPoint - currentPoint, Vector3.up);
+
+            // 벽 생성
+            GameObject wall = Instantiate(wallPrefab, wallPosition, wallRotation);
+            wall.transform.localScale = new Vector3(0.05f, wallHeight, Vector3.Distance(nextPoint, currentPoint));
+            // 부모 오브젝트로 설정
+            wall.transform.SetParent(newFloorPrefab.transform);
         }
     }
 
@@ -253,6 +269,7 @@ public class Button_Complete : MonoBehaviour
 
         CreateNewFloorPrefab();
         data_FloorCount.floorCount++;
+
 
         ClearModifying();
 

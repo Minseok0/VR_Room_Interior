@@ -15,7 +15,6 @@ MonoBehaviour:
   m_LayerNames:
   - Default
   - Cube
-  - Furniture
   - 
   - 
   - 
@@ -45,3 +44,4 @@ MonoBehaviour:
   - 
   - 
   - 
+  - Teleport

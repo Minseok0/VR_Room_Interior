@@ -16,7 +16,7 @@ public class GrabChecker : MonoBehaviour
         xrGrabInteractable.selectExited.AddListener(OnGrabExited);
     }
 
-    // if didn't add listnerer, set this method is public then add events at grab interactable's select in inspector 
+    // if didn't add listener, set this method is public then add events at grab interactable's select in inspector 
     private void OnGrabEntered(SelectEnterEventArgs arg0)
     { 
         this.gameObject.AddComponent<PlacementChecker>();

@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 6416667634897854229}
   - component: {fileID: 6416667634897854442}
   m_Layer: 0
-  m_Name: FloorCreatePlane 0
+  m_Name: FloorCreatePlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

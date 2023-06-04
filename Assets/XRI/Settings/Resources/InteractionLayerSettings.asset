@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LayerNames:
   - Default
-  - Cube
-  - Furniture
+  - CUBE
+  - ROOM
+  - FURNITURE
   - 
   - 
   - 
@@ -43,5 +44,4 @@ MonoBehaviour:
   - 
   - 
   - 
-  - 
-  - 
+  - Teleport

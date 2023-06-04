@@ -5,11 +5,18 @@ using UnityEditor;
 
 public class Button_CompleteCreatingRoom : MonoBehaviour
 {
-    public Data_FloorCreatePlane data_FloorCreatePlane;
-    public Data_FloorCount data_FloorCount;
+    public string createdFloor_MeshPath;
+    public string createdFloor_PrefabPath;
+    public string createdRooom_PrefabPath;
 
-    public GameObject Room_EmptyObject;
-    public GameObject newFloorPrefab;
+    public Data_RoomCount data_RoomCount;
+    public Data_FloorCreatePlane data_FloorCreatePlane;
+
+    public GameObject roomObject;
+    public GameObject floorObject;
+    public GameObject ceilingObject;
+    public Material ceilingMat;
+
     public GameObject wallPrefab;
 
     public Vector3 newFloorCenter;
@@ -19,9 +26,9 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
     private Mesh mesh;
     private MeshFilter meshFilter;
     private MeshCollider meshCollider;
+    private MeshRenderer meshRenderer;
 
     public float wallHeight;
-
 
     
 
@@ -30,10 +37,14 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
     // 새로운 Mesh 생성 후 prefab으로 저장
     private void CreateNewRoomPrefab()
     {
-        newFloorCenter = Vector3.zero;
-        newFloorPrefab = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        roomObject = new GameObject("CreatedRoom " + data_RoomCount.roomCount);
 
+        floorObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        floorObject.name = "CreatedFloor " + data_RoomCount.roomCount;
+
+        newFloorCenter = Vector3.zero;
         mesh = new Mesh();
+        mesh.name = "CreatedMesh " + data_RoomCount.roomCount;
 
         List<Vector3> newVertices_translated = new();
 
@@ -51,20 +62,35 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         //mesh.RecalculateBounds();
         mesh.RecalculateNormals();
 
-        AssetDatabase.CreateAsset(mesh, "Assets/03.Prefabs/CSW/FloorPlanes/Meshes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".asset"); // 메쉬를 Asset으로 저장
-       //Assets / 03.Prefabs / FloorPlanes / Meshes 
-        meshFilter = newFloorPrefab.GetComponent<MeshFilter>();
+        // createdFloor_mesh save
+        AssetDatabase.CreateAsset(mesh, createdFloor_MeshPath + mesh.name + ".asset"); 
+
+        meshFilter = floorObject.GetComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
-        meshCollider = newFloorPrefab.GetComponent<MeshCollider>();
+        meshCollider = floorObject.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
+        
+        // Material planeMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        // planeMaterial.SetInteger("_DoubleSidedEnabled", 1);
+        // planeMaterial.renderQueue += 1; // Render Queue 변경을 위해 추가
+
+        // meshRenderer = floorObject.GetComponent<MeshRenderer>();
+        // meshRenderer.material = planeMaterial;
+
+        PrefabUtility.SaveAsPrefabAsset(floorObject, createdFloor_PrefabPath + floorObject.name + ".prefab" );
+
+        // floorObject is room object's child.
+        floorObject.transform.SetParent(roomObject.transform);
 
         CreateWalls(newVertices_translated);
 
-        string prefabPath = "Assets/03.Prefabs/CSW/FloorPlanes/" + newFloorPrefab.name + " " + data_FloorCount.floorCount + ".prefab";
-        PrefabUtility.SaveAsPrefabAsset(newFloorPrefab, prefabPath);
+        CreateCeiling();
 
-        Destroy(newFloorPrefab);
+        PrefabUtility.SaveAsPrefabAssetAndConnect(roomObject, createdRooom_PrefabPath + roomObject.name + ".prefab", InteractionMode.UserAction );
+        data_RoomCount.roomCount++;
+
+        Destroy(roomObject);
     }
 
     // 주어진 정점a b c을 순서대로 clock wise인지 확인
@@ -214,7 +240,6 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
     // Make walls _ 벽 생성
     private void CreateWalls(List<Vector3> newVertices)
     {
-
         int wallCount = newVertices.Count; // # of walls == # of vertices
         Vector3 wallPosition;
         for (int i=0; i< wallCount; i++)
@@ -235,14 +260,35 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
             GameObject wall = Instantiate(wallPrefab, wallPosition, wallRotation);
             wall.transform.localScale = new Vector3(0.05f, wallHeight, Vector3.Distance(nextPoint, currentPoint));
             // 부모 오브젝트로 설정
-            wall.transform.SetParent(newFloorPrefab.transform);
+            wall.transform.SetParent(roomObject.transform);
         }
+    }
+
+    // Make walls _ 벽 생성
+    private void CreateCeiling()
+    {
+        GameObject ceiling = Instantiate(floorObject);
+        ceiling.name = "ceiling";
+        ceiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f),
+        floorObject.transform.rotation);
+        ceiling.GetComponent<MeshRenderer>().material = ceilingMat;
+        ceiling.transform.SetParent(roomObject.transform);
+        // GameObject insideCeiling = Instantiate(floorObject);
+        // insideCeiling.name = "insideCeiling";
+        // insideCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f), floorObject.transform.rotation * Quaternion.Euler(180.0f, 180.0f, 180.0f));
+
+
+        // GameObject outsideCeiling = Instantiate(floorObject);
+        // outsideCeiling.name = "outsideCeiling";
+        // outsideCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f), floorObject.transform.rotation );
+
+        // insideCeiling.transform.SetParent(roomObject.transform);
+        // outsideCeiling.transform.SetParent(roomObject.transform);
     }
 
     // OnClick()
     public void CompleteCreating()
     {
-        Room_EmptyObject = new GameObject("Room " + data_FloorCount.floorCount);
         // Line renderer 
         data_FloorCreatePlane.floorCreatePlane.GetComponent<LineRenderer>().positionCount = 0;
 
@@ -257,8 +303,8 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         else
             PolygonTriangulation(); // triangles 설정
 
+
         CreateNewRoomPrefab();
-        data_FloorCount.floorCount++;
 
 
         ClearAll();

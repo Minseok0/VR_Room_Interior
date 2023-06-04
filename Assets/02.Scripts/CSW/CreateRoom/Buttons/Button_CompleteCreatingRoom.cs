@@ -6,7 +6,11 @@ using UnityEditor;
 public class Button_CompleteCreatingRoom : MonoBehaviour
 {
     public string createdFloor_MeshPath;
+    public string createdCeiling_MeshPath;
+
     public string createdFloor_PrefabPath;
+    public string createdCeiling_PrefabPath;
+
     public string createdRooom_PrefabPath;
 
     public Data_RoomCount data_RoomCount;
@@ -19,7 +23,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
     public GameObject wallPrefab;
 
-    public Vector3 newFloorCenter;
+    public Vector3 newFloorCenter, newCeilingCenter;
 
     public List<int> triangles;
 
@@ -30,7 +34,8 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
     public float wallHeight;
 
-    
+    private List<Vector3> newVertices_translated;
+
 
     //https://bloodstrawberry.tistory.com/996
 
@@ -39,49 +44,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
     {
         roomObject = new GameObject("CreatedRoom " + data_RoomCount.roomCount);
 
-        floorObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        floorObject.name = "CreatedFloor " + data_RoomCount.roomCount;
-
-        newFloorCenter = Vector3.zero;
-        mesh = new Mesh();
-        mesh.name = "CreatedMesh " + data_RoomCount.roomCount;
-
-        List<Vector3> newVertices_translated = new();
-
-        foreach (var v in data_FloorCreatePlane.newVertices)
-            newFloorCenter += v;
-        newFloorCenter /= data_FloorCreatePlane.newVertices.Count;
-
-
-        foreach (var v in data_FloorCreatePlane.newVertices)
-            newVertices_translated.Add(v - newFloorCenter); // createFloorPlane의 위치에 대한 상대적인 위치
-
-        mesh.vertices = newVertices_translated.ToArray();
-
-        mesh.triangles = triangles.ToArray();
-        //mesh.RecalculateBounds();
-        mesh.RecalculateNormals();
-
-        // createdFloor_mesh save
-        AssetDatabase.CreateAsset(mesh, createdFloor_MeshPath + mesh.name + ".asset"); 
-
-        meshFilter = floorObject.GetComponent<MeshFilter>();
-        meshFilter.mesh = mesh;
-
-        meshCollider = floorObject.GetComponent<MeshCollider>();
-        meshCollider.sharedMesh = mesh;
-        
-        // Material planeMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-        // planeMaterial.SetInteger("_DoubleSidedEnabled", 1);
-        // planeMaterial.renderQueue += 1; // Render Queue 변경을 위해 추가
-
-        // meshRenderer = floorObject.GetComponent<MeshRenderer>();
-        // meshRenderer.material = planeMaterial;
-
-        PrefabUtility.SaveAsPrefabAsset(floorObject, createdFloor_PrefabPath + floorObject.name + ".prefab" );
-
-        // floorObject is room object's child.
-        floorObject.transform.SetParent(roomObject.transform);
+        CreateFloor();
 
         CreateWalls(newVertices_translated);
 
@@ -237,7 +200,51 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         }
     }
 
-    // Make walls _ 벽 생성
+    // floor - 바닥면
+    private void CreateFloor()
+    {
+        newVertices_translated = new();
+
+        floorObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        floorObject.name = "CreatedFloor " + data_RoomCount.roomCount;
+
+        newFloorCenter = Vector3.zero;
+        mesh = new Mesh();
+        mesh.name = "CreatedFloorMesh " + data_RoomCount.roomCount;
+
+
+        foreach (var v in data_FloorCreatePlane.newVertices)
+            newFloorCenter += v;
+        newFloorCenter /= data_FloorCreatePlane.newVertices.Count;
+
+
+        foreach (var v in data_FloorCreatePlane.newVertices)
+            newVertices_translated.Add(v - newFloorCenter); // createFloorPlane의 위치에 대한 상대적인 위치
+
+        mesh.vertices = newVertices_translated.ToArray();
+
+        mesh.triangles = triangles.ToArray();
+        //mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        // createdFloor_mesh save
+        AssetDatabase.CreateAsset(mesh, createdFloor_MeshPath + mesh.name + ".asset");
+
+        meshFilter = floorObject.GetComponent<MeshFilter>();
+        meshFilter.mesh = mesh;
+
+        meshCollider = floorObject.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
+
+        floorObject.transform.position += new Vector3(0.0f, 0.0001f, 0.0f);
+
+        PrefabUtility.SaveAsPrefabAsset(floorObject, createdFloor_PrefabPath + floorObject.name + ".prefab");
+
+        // floorObject is room object's child.
+        floorObject.transform.SetParent(roomObject.transform);
+    }
+
+    // walls _ 벽 생성
     private void CreateWalls(List<Vector3> newVertices)
     {
         int wallCount = newVertices.Count; // # of walls == # of vertices
@@ -257,33 +264,80 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
             Quaternion wallRotation = Quaternion.LookRotation(nextPoint - currentPoint, Vector3.up);
 
             // 벽 생성
-            GameObject wall = Instantiate(wallPrefab, wallPosition, wallRotation);
-            wall.transform.localScale = new Vector3(0.05f, wallHeight, Vector3.Distance(nextPoint, currentPoint));
-            // 부모 오브젝트로 설정
-            wall.transform.SetParent(roomObject.transform);
+            GameObject innerWall = Instantiate(wallPrefab, wallPosition, wallRotation);
+            innerWall.name = "InnerWall_" + i;
+            innerWall.transform.localScale = new Vector3(0.0001f, wallHeight, Vector3.Distance(nextPoint, currentPoint));
+            // child gameobject
+            innerWall.transform.SetParent(roomObject.transform);
+            //innerWall.transform.localPosition += new Vector3(0.005f, 0.0f, 0.0f);
+
+            // 벽 생성
+            GameObject outerWall = Instantiate(wallPrefab, wallPosition, wallRotation);
+            outerWall.name = "OuterWall_" + i;
+            outerWall.transform.localScale = new Vector3(0.0001f, wallHeight, Vector3.Distance(nextPoint, currentPoint) + 0.00015f);
+            // child gameobject
+            outerWall.transform.SetParent(roomObject.transform);
+            outerWall.transform.localPosition += new Vector3(-0.0001f, 0.0f, 0.0f);
         }
     }
 
     // Make walls _ 벽 생성
     private void CreateCeiling()
     {
-        GameObject ceiling = Instantiate(floorObject);
-        ceiling.name = "ceiling";
-        ceiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f),
+        GameObject innerCeiling = GameObject.CreatePrimitive(PrimitiveType.Plane);
+
+        innerCeiling.name = "InnerCeiling " + data_RoomCount.roomCount;
+
+        newCeilingCenter = Vector3.zero;
+        mesh = new Mesh();
+        mesh.name = "CreatedCeilingMesh " + data_RoomCount.roomCount;
+
+        /*foreach (var v in data_FloorCreatePlane.newVertices)
+            newCeilingCenter += v;
+        newCeilingCenter /= data_FloorCreatePlane.newVertices.Count;
+
+
+        foreach (var v in data_FloorCreatePlane.newVertices)
+            newVertices_translated.Add(v - newCeilingCenter); // createFloorPlane의 위치에 대한 상대적인 위치*/
+
+        mesh.vertices = newVertices_translated.ToArray();
+
+        triangles.Reverse();
+        mesh.triangles = triangles.ToArray();
+        //mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        // createdFloor_mesh save
+        AssetDatabase.CreateAsset(mesh, createdCeiling_MeshPath + mesh.name + ".asset");
+
+        meshFilter = innerCeiling.GetComponent<MeshFilter>();
+        meshFilter.mesh = mesh;
+
+        meshCollider = innerCeiling.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
+
+        innerCeiling.transform.position += new Vector3(0.0f, wallHeight, 0.0f);
+
+        PrefabUtility.SaveAsPrefabAsset(innerCeiling, createdCeiling_PrefabPath + innerCeiling.name + ".prefab");
+
+        // floorObject is room object's child.
+        innerCeiling.transform.SetParent(roomObject.transform);
+
+        /*GameObject innerCeiling = Instantiate(floorObject);
+        innerCeiling.name = "InnerCeiling";
+        innerCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight+0.0001f, 0.0f),
         floorObject.transform.rotation);
-        ceiling.GetComponent<MeshRenderer>().material = ceilingMat;
-        ceiling.transform.SetParent(roomObject.transform);
-        // GameObject insideCeiling = Instantiate(floorObject);
-        // insideCeiling.name = "insideCeiling";
-        // insideCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f), floorObject.transform.rotation * Quaternion.Euler(180.0f, 180.0f, 180.0f));
+        innerCeiling.GetComponent<MeshRenderer>().material = ceilingMat;
+        innerCeiling.transform.SetParent(roomObject.transform);*/
 
+        GameObject outerCeiling = Instantiate(floorObject);
+        outerCeiling.name = "OuterCeiling";
+        outerCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight + 0.0002f, 0.0f),
+        floorObject.transform.rotation);
+        outerCeiling.GetComponent<MeshRenderer>().material = ceilingMat;
+        outerCeiling.transform.SetParent(roomObject.transform);
+        outerCeiling.transform.localScale += Vector3.one*0.003f;
 
-        // GameObject outsideCeiling = Instantiate(floorObject);
-        // outsideCeiling.name = "outsideCeiling";
-        // outsideCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f), floorObject.transform.rotation );
-
-        // insideCeiling.transform.SetParent(roomObject.transform);
-        // outsideCeiling.transform.SetParent(roomObject.transform);
     }
 
     // OnClick()

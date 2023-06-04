@@ -40,16 +40,25 @@ public class SetFloorVertex : MonoBehaviour
         if (hitResult)
         {
 
-            Debug.Log("hit position = " + hitInfo.point);
 
 
             GameObject newPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             newPoint.name = "vertex_" + data_FloorCreatePlane.newVertices.Count;
-            newPoint.transform.position = hitInfo.point;
-            newPoint.transform.localScale = new Vector3(0.05f, 0.0f, 0.05f);
+            //Debug.Log("hitInfo.point.x  = " + hitInfo.point.x);
+            /*Vector3 newPointPosition = hitInfo.point;
+            Vector3 roundedPointPosition = */
+            newPoint.transform.position = new Vector3(
+                Mathf.Round(hitInfo.point.x * 1000f) / 1000f,
+                Mathf.Round(hitInfo.point.y * 1000f) / 1000f,
+                Mathf.Round(hitInfo.point.z * 1000f) / 1000f
+            );
+            //Debug.Log("newPoint.transform.position = " + newPoint.transform.position.x);
+            newPoint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             newPoint.GetComponent<MeshRenderer>().material = vertexMaterial;
 
-            newPoint.transform.SetParent(this.gameObject.transform);
+            //newPoint.transform.SetParent(this.gameObject.transform);
+
+            
 
             data_FloorCreatePlane.verticesToDestroy.Add(newPoint); // cancel �� �����ؾ��� object
 
@@ -58,7 +67,7 @@ public class SetFloorVertex : MonoBehaviour
 
 
             data_FloorCreatePlane.lineRenderer.positionCount = data_FloorCreatePlane.newVertices.Count;
-            data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount-1, hitInfo.point+Vector3.up*0.05f);
+            data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount-1, hitInfo.point+Vector3.up*0.0001f);
 
             // lineLengthCalculator.Calculate();
         }

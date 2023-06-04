@@ -200,7 +200,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99ae0efbba907da4f933560b695093f7, type: 2}
+  - {fileID: 2100000, guid: e7b638a089431c04bb74a1b4b8db697a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -254,11 +254,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 2
+    m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_CustomReticle: {fileID: 919132149155446097, guid: b277dae6d3c4d774d954c70940701b62,
     type: 3}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
   m_FirstHoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -303,6 +310,7 @@ MonoBehaviour:
       m_Calls: []
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
   m_OnFirstHoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -457,7 +465,7 @@ GameObject:
   - component: {fileID: 6416667635152987313}
   - component: {fileID: 6416667635152987314}
   m_Layer: 0
-  m_Name: Button_Complete
+  m_Name: Button_CreateRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -567,8 +575,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6416667635152987314}
-        m_TargetAssemblyTypeName: ModifyToNewVertices, Assembly-CSharp
-        m_MethodName: Modify
+        m_TargetAssemblyTypeName: Button_CompleteCreatingRoom, Assembly-CSharp
+        m_MethodName: CompleteCreating
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -590,11 +598,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1862ed4d352c5d48951ffa08a415cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  createdFloor_MeshPath: Assets/03.Prefabs/CSW/Room/Floors/Meshes/
+  createdCeiling_MeshPath: Assets/03.Prefabs/CSW/Room/Ceilings/Meshes/
+  createdFloor_PrefabPath: Assets/03.Prefabs/CSW/Room/Floors/
+  createdCeiling_PrefabPath: Assets/03.Prefabs/CSW/Room/Ceilings/
+  createdRooom_PrefabPath: Assets/03.Prefabs/CSW/Room/Rooms/
+  data_RoomCount: {fileID: 11400000, guid: 5da335ac75a0e204aab72b72f791907c, type: 2}
   data_FloorCreatePlane: {fileID: 11400000, guid: 9d8e3e3d21502d54f9aa8ddd06bb3770,
     type: 2}
-  data_FloorCount: {fileID: 11400000, guid: eff4f623c198e224d84d90d8b24ad980, type: 2}
+  roomObject: {fileID: 0}
+  floorObject: {fileID: 0}
+  ceilingObject: {fileID: 0}
+  ceilingMat: {fileID: 2100000, guid: c1ba65593ddf02448a35938a23262079, type: 2}
+  wallPrefab: {fileID: 4913990278949097337, guid: 9d42a144829389f4eb4ca2e10935dbcf,
+    type: 3}
   newFloorCenter: {x: 0, y: 0, z: 0}
+  newCeilingCenter: {x: 0, y: 0, z: 0}
   triangles: 
+  wallHeight: 2.2
 --- !u!1 &6416667635640861642
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +734,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2, y: 0}
   m_SizeDelta: {x: 0.9, y: 0.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6416667635746730270
@@ -943,7 +964,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: 0}
+  m_AnchoredPosition: {x: 1.03, y: 0}
   m_SizeDelta: {x: 0.9, y: 0.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6416667636160779932
@@ -1125,7 +1146,7 @@ MonoBehaviour:
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1133,7 +1154,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Complete
+  m_Text: 'Create
+
+    Room'
 --- !u!1 &6416667636738573785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,10 +1233,12 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reset
+  m_Text: 'Reset
+
+    Drawing'
 --- !u!1 &6416667636759423146
 GameObject:
   m_ObjectHideFlags: 0

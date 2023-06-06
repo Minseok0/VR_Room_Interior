@@ -4,24 +4,17 @@ using UnityEngine;
 
 public class Button_ChangeView : MonoBehaviour
 {
-    enum POV{
-        originalView = 0,
-        TopView =1
-    }
-    POV pov;
-    private void Start()
+    public Transform XR_RigTr;
+    public Vector3 cameraDirection;
+    public void MoveBackward()
     {
-        pov = POV.originalView;
+        cameraDirection = (-Camera.main.transform.forward) * 5.0f; //  + Camera.main.transform.up
+        XR_RigTr.transform.position += cameraDirection;
     }
-    // Start is called before the first frame update
-    public void ChangePos()
+    public void MoveForward()
     {
-        if(pov == POV.originalView)
-            pov = POV.TopView;
-        else
-            pov = POV.originalView;
-
-            Debug.Log("POV = " + pov);
+        cameraDirection = (Camera.main.transform.forward ) * 5.0f; //- Camera.main.transform.up
+        XR_RigTr.transform.position += cameraDirection;
     }
 
 }

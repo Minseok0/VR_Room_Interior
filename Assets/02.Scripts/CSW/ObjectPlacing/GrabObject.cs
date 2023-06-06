@@ -17,7 +17,7 @@ public class GrabObject : MonoBehaviour
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit) && rayInteractor.isSelectActive)
         {
             xrRayAttachFurniture.transform.SetPositionAndRotation(raycastHit.transform.position, raycastHit.transform.rotation);
-            Debug.Log("raycastHit.rigidbody.gameObject " + raycastHit.rigidbody.gameObject);
+            //Debug.Log("raycastHit.rigidbody.gameObject " + raycastHit.rigidbody.gameObject.name);
 
         }
     }

@@ -5,20 +5,19 @@ using UnityEngine;
 
 public class PlacementChecker : MonoBehaviour
 {
-    private List<Collider> colliderList; // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®µé ÀúÀåÇÒ ¸®½ºÆ®
-    public int colliderCnt; // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®µé °³¼ö
+    private List<Collider> colliderList; // ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    public int colliderCnt; // ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    public int layerFloor; // ÁöÇü ·¹ÀÌ¾î (¹«½ÃÇÏ°Ô ÇÒ °Í)
-    private const int IGNORE_RAYCAST_LAYER = 2;  // ignore_raycast (¹«½ÃÇÏ°Ô ÇÒ °Í)
+    public int layerFloor; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ ï¿½ï¿½)
+    private const int IGNORE_RAYCAST_LAYER = 2;  // ignore_raycast (ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ ï¿½ï¿½)
 
     public Material originalMat;
     public Material RedFurniture;
     
     private void Start()
     {
-        layerFloor = 6;
         colliderList = new List<Collider>();
-        originalMat = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/CSW/Materials/Furniture.mat");
+        originalMat = this.gameObject.GetComponent<MeshRenderer>().material;
         RedFurniture = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/CSW/Materials/RedFurniture.mat");
     }
 

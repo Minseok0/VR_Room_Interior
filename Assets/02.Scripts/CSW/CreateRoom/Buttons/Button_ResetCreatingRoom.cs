@@ -10,13 +10,18 @@ public class Button_ResetCreatingRoom : MonoBehaviour
     {
         data_FloorCreatePlane.newVertices.Clear();
         data_FloorCreatePlane.lineRenderer.positionCount = 0;
+        data_FloorCreatePlane.lineLengths.Clear();
 
-        foreach (GameObject obj in data_FloorCreatePlane.verticesToDestroy)
-            Destroy(obj);
+        for (int i = 0; i < data_FloorCreatePlane.verticesToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.verticesToDestroy[i]);
 
         data_FloorCreatePlane.verticesToDestroy.Clear();
 
-        Debug.Log("Button_Reset.Reset()");
+        for (int i = 0; i < data_FloorCreatePlane.lengthTextsToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.lengthTextsToDestroy[i]);
 
+        data_FloorCreatePlane.lengthTextsToDestroy.Clear();
+
+        Debug.Log("Button_Reset.Reset()");
     }
 }

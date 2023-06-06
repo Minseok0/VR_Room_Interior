@@ -7,23 +7,31 @@ public class Button_CancelCreatingRoom : MonoBehaviour
 {
     public Data_FloorCreatePlane data_FloorCreatePlane;
 
-    //public Transform floorCreatePlaneTr; // ¹Ù´Ú¸é ÀÛ¾÷´ë transform
-    public Transform XR_RigTr; // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ transform
+    //public Transform floorCreatePlaneTr; // ï¿½Ù´Ú¸ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ transform
+    public Transform XR_RigTr; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ transform
 
     public GameObject createNewFloorButton;
 
     public void Cancel()
     {
-        // data_FloorCreatePlane µ¥ÀÌÅÍµé ÃÊ±âÈ­
+        // data_FloorCreatePlane ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ ï¿½Ê±ï¿½È­
         data_FloorCreatePlane.newVertices.Clear();
 
         data_FloorCreatePlane.lineRenderer.positionCount = 0;
 
-        foreach (GameObject obj in data_FloorCreatePlane.verticesToDestroy)
-            Destroy(obj);
+        data_FloorCreatePlane.lineLengths.Clear();
+        
+        for (int i = 0; i < data_FloorCreatePlane.verticesToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.verticesToDestroy[i]);
+
         data_FloorCreatePlane.verticesToDestroy.Clear();
 
-        // ÇÃ·¹ÀÌ¾î ¿øÀ§Ä¡
+        for (int i = 0; i < data_FloorCreatePlane.lengthTextsToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.lengthTextsToDestroy[i]);
+
+        data_FloorCreatePlane.lengthTextsToDestroy.Clear();
+
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡
         XR_RigTr.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
 
         createNewFloorButton.SetActive(true);

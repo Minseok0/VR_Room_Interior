@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class Button_CompleteCreatingRoom : MonoBehaviour
 {
+    public Transform XR_RigTr;
+    public GameObject createNewFloorButton;
+
     public string createdFloor_MeshPath;
     public string createdCeiling_MeshPath;
-
     public string createdFloor_PrefabPath;
     public string createdCeiling_PrefabPath;
 
@@ -18,8 +22,8 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
     public GameObject roomObject;
     public GameObject floorObject;
-    public GameObject ceilingObject;
-    public Material ceilingMat;
+    //public GameObject ceilingObject;
+    //public Material ceilingMat;
 
     public GameObject wallPrefab;
 
@@ -53,7 +57,11 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         PrefabUtility.SaveAsPrefabAssetAndConnect(roomObject, createdRooom_PrefabPath + roomObject.name + ".prefab", InteractionMode.UserAction );
         data_RoomCount.roomCount++;
 
-        Destroy(roomObject);
+        //Destroy(roomObject);
+        roomObject.transform.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
+
+        XR_RigTr.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
+        createNewFloorButton.SetActive(true);
     }
 
     // 주어진 정점a b c을 순서대로 clock wise인지 확인
@@ -212,7 +220,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         mesh = new Mesh();
         mesh.name = "CreatedFloorMesh " + data_RoomCount.roomCount;
 
-
+        //Debug.Log("data_FloorCreatePlane.newVertices.Count = " + data_FloorCreatePlane.newVertices.Count);
         foreach (var v in data_FloorCreatePlane.newVertices)
             newFloorCenter += v;
         newFloorCenter /= data_FloorCreatePlane.newVertices.Count;
@@ -238,8 +246,10 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
         floorObject.transform.position += new Vector3(0.0f, 0.0001f, 0.0f);
 
-        PrefabUtility.SaveAsPrefabAsset(floorObject, createdFloor_PrefabPath + floorObject.name + ".prefab");
+        floorObject.AddComponent<TeleportationArea>();
 
+        PrefabUtility.SaveAsPrefabAsset(floorObject, createdFloor_PrefabPath + floorObject.name + ".prefab");
+        //floorObject.AddComponent<Teleportation
         // floorObject is room object's child.
         floorObject.transform.SetParent(roomObject.transform);
     }
@@ -251,7 +261,6 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         Vector3 wallPosition;
         for (int i=0; i< wallCount; i++)
         {
-
             Vector3 currentPoint = newVertices[i];
             Vector3 nextPoint = newVertices[(i + 1) % newVertices.Count]; // 다음 점 (마지막 점일 경우 첫 번째 점으로 연결)
 
@@ -266,18 +275,19 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
             // 벽 생성
             GameObject innerWall = Instantiate(wallPrefab, wallPosition, wallRotation);
             innerWall.name = "InnerWall_" + i;
-            innerWall.transform.localScale = new Vector3(0.0001f, wallHeight, Vector3.Distance(nextPoint, currentPoint));
+            innerWall.transform.localScale = new Vector3(0.03f, wallHeight, Vector3.Distance(nextPoint, currentPoint)); // Vector3.Distance(nextPoint, currentPoint
+            innerWall.transform.position += new Vector3(-0.01f, 0.0001f, 0.0f);
             // child gameobject
             innerWall.transform.SetParent(roomObject.transform);
-            //innerWall.transform.localPosition += new Vector3(0.005f, 0.0f, 0.0f);
+            
 
             // 벽 생성
             GameObject outerWall = Instantiate(wallPrefab, wallPosition, wallRotation);
             outerWall.name = "OuterWall_" + i;
-            outerWall.transform.localScale = new Vector3(0.0001f, wallHeight, Vector3.Distance(nextPoint, currentPoint) + 0.00015f);
+            outerWall.transform.localScale = new Vector3(0.03f, wallHeight, Vector3.Distance(nextPoint, currentPoint)+0.0001f); //Vector3.Distance(nextPoint, currentPoint)
+            outerWall.transform.localPosition += new Vector3(0, 0.0001f, 0.0f);
             // child gameobject
             outerWall.transform.SetParent(roomObject.transform);
-            outerWall.transform.localPosition += new Vector3(-0.0001f, 0.0f, 0.0f);
         }
     }
 
@@ -292,19 +302,10 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         mesh = new Mesh();
         mesh.name = "CreatedCeilingMesh " + data_RoomCount.roomCount;
 
-        /*foreach (var v in data_FloorCreatePlane.newVertices)
-            newCeilingCenter += v;
-        newCeilingCenter /= data_FloorCreatePlane.newVertices.Count;
-
-
-        foreach (var v in data_FloorCreatePlane.newVertices)
-            newVertices_translated.Add(v - newCeilingCenter); // createFloorPlane의 위치에 대한 상대적인 위치*/
-
         mesh.vertices = newVertices_translated.ToArray();
 
         triangles.Reverse();
         mesh.triangles = triangles.ToArray();
-        //mesh.RecalculateBounds();
         mesh.RecalculateNormals();
 
         // createdFloor_mesh save
@@ -316,27 +317,20 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         meshCollider = innerCeiling.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
 
-        innerCeiling.transform.position += new Vector3(0.0f, wallHeight, 0.0f);
+        innerCeiling.transform.position += new Vector3(0.0f, wallHeight-0.02f, 0.0f);
 
         PrefabUtility.SaveAsPrefabAsset(innerCeiling, createdCeiling_PrefabPath + innerCeiling.name + ".prefab");
 
         // floorObject is room object's child.
         innerCeiling.transform.SetParent(roomObject.transform);
 
-        /*GameObject innerCeiling = Instantiate(floorObject);
-        innerCeiling.name = "InnerCeiling";
-        innerCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight+0.0001f, 0.0f),
-        floorObject.transform.rotation);
-        innerCeiling.GetComponent<MeshRenderer>().material = ceilingMat;
-        innerCeiling.transform.SetParent(roomObject.transform);*/
-
         GameObject outerCeiling = Instantiate(floorObject);
         outerCeiling.name = "OuterCeiling";
-        outerCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight + 0.0002f, 0.0f),
+        outerCeiling.transform.SetPositionAndRotation(floorObject.transform.position + new Vector3(0.0f, wallHeight, 0.0f),
         floorObject.transform.rotation);
-        outerCeiling.GetComponent<MeshRenderer>().material = ceilingMat;
+        //outerCeiling.GetComponent<MeshRenderer>().material = ceilingMat;
         outerCeiling.transform.SetParent(roomObject.transform);
-        outerCeiling.transform.localScale += Vector3.one*0.003f;
+        //outerCeiling.transform.localScale += Vector3.one*0.003f;
 
     }
 
@@ -357,9 +351,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         else
             PolygonTriangulation(); // triangles 설정
 
-
         CreateNewRoomPrefab();
-
 
         ClearAll();
 
@@ -372,11 +364,16 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         data_FloorCreatePlane.newVertices.Clear();
         triangles.Clear();
         data_FloorCreatePlane.floorCreatePlane.GetComponent<LineRenderer>().positionCount = 0;
+        data_FloorCreatePlane.lineLengths.Clear();
 
         //newPoint.name = "vertex_" + data_FloorCreatePlane.newVertices.Count;
 
         for (int i = 0; i < data_FloorCreatePlane.verticesToDestroy.Count; i++)
             Destroy(data_FloorCreatePlane.verticesToDestroy[i]);
         data_FloorCreatePlane.verticesToDestroy.Clear();
+
+        for (int i = 0; i < data_FloorCreatePlane.lengthTextsToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.lengthTextsToDestroy[i]);
+        data_FloorCreatePlane.lengthTextsToDestroy.Clear();
     }
 }

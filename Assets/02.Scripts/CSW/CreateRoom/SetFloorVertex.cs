@@ -6,19 +6,19 @@ using UnityEngine.UI;
 
 public class SetFloorVertex : MonoBehaviour
 {
-    
     public XRRayInteractor rayInteractor_right;
     
     public Data_FloorCreatePlane data_FloorCreatePlane;
-    
     public Material vertexMaterial;
+    public GameObject lengthTextPrefab;
 
-    //public Text
+    public List<GameObject> lengthTextToDestroy;
+
+    bool isHovering;
 
     // Start is called before the first frame update
     void Start()
     {
-
         rayInteractor_right = GameObject.Find("RightHand Controller").GetComponent<XRRayInteractor>();
 
         data_FloorCreatePlane.floorCreatePlane = this.gameObject;
@@ -30,73 +30,164 @@ public class SetFloorVertex : MonoBehaviour
 
         data_FloorCreatePlane.verticesToDestroy = new List<GameObject>();
 
+        data_FloorCreatePlane.lengthTextsToDestroy = new List<GameObject>();
+
     }
 
-    public void SetNewVertex()
+    private void NewPointSetting(GameObject _newPoint)
     {
+        _newPoint.GetComponent<MeshRenderer>().material = vertexMaterial;
+        _newPoint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         
-        bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
+    }
 
+    public void HoverEntered_NewVertex()
+    {
+        isHovering = true;
+
+        bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
+        if(hitResult)
+        {
+            data_FloorCreatePlane.lineRenderer.positionCount++;
+            //data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount - 1, hitInfo.point + Vector3.up * 0.0001f);
+
+            StartCoroutine(HoveringNewVertex());
+        }
+    }
+
+    IEnumerator HoveringNewVertex()
+    {
+        while(isHovering){
+            if (data_FloorCreatePlane.newVertices.Count < 1)
+                yield return new WaitForSeconds(0.1f);
+            else
+            {
+                bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
+
+                if (hitResult)
+                {
+                    data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount - 1, hitInfo.point + Vector3.up * 0.0001f);
+
+                    LengthCalculate_Hover();
+                }
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+    }
+
+    public void HoverExited_NewVertex()
+    {
+        isHovering = false;
+
+        StopCoroutine(HoveringNewVertex());
+        data_FloorCreatePlane.lineRenderer.positionCount--;
+
+        LengthCalculate_Select();
+    }
+
+    private void LengthCalculate_Hover()
+    {
+        int positionCnt = data_FloorCreatePlane.lineRenderer.positionCount;
+        if (positionCnt < 2)
+            return;
+
+        for (int i = 0; i < data_FloorCreatePlane.lengthTextsToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.lengthTextsToDestroy[i]);
+
+        data_FloorCreatePlane.lineLengths.Clear();
+        data_FloorCreatePlane.lengthTextsToDestroy.Clear();
+
+        Vector3[] positions = new Vector3[positionCnt];
+        data_FloorCreatePlane.lineRenderer.GetPositions(positions);
+
+        for (int i = 0; i < positionCnt; i++)
+        {
+            float segmentLength = Vector3.Distance(positions[i % positionCnt], positions[(i + 1) % positionCnt]);
+            segmentLength = (Mathf.Round(segmentLength * 1000f) / 1000f) * 1000;
+
+            // 각 점에 텍스트를 생성하여 길이 표시
+            GameObject lengthText = Instantiate(lengthTextPrefab);
+            lengthText.transform.position = ((positions[i % positionCnt] + positions[(i + 1) % positionCnt]) / 2f);
+           
+            TextMesh textMesh = lengthText.GetComponent<TextMesh>();
+            textMesh.text = segmentLength.ToString();
+
+            data_FloorCreatePlane.lineLengths.Add(segmentLength);
+
+            data_FloorCreatePlane.lengthTextsToDestroy.Add(lengthText);
+        }
+    }
+
+    public void SelectNewVertex()
+    {
+        bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
+        GameObject newPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        NewPointSetting(newPoint);
+        newPoint.transform.position = hitInfo.point;
         if (hitResult)
         {
-
-
-
-            GameObject newPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            newPoint.name = "vertex_" + data_FloorCreatePlane.newVertices.Count;
-            //Debug.Log("hitInfo.point.x  = " + hitInfo.point.x);
-            /*Vector3 newPointPosition = hitInfo.point;
-            Vector3 roundedPointPosition = */
-            newPoint.transform.position = new Vector3(
-                Mathf.Round(hitInfo.point.x * 1000f) / 1000f,
-                Mathf.Round(hitInfo.point.y * 1000f) / 1000f,
-                Mathf.Round(hitInfo.point.z * 1000f) / 1000f
-            );
-            //Debug.Log("newPoint.transform.position = " + newPoint.transform.position.x);
-            newPoint.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            newPoint.GetComponent<MeshRenderer>().material = vertexMaterial;
-
-            //newPoint.transform.SetParent(this.gameObject.transform);
-
-            
-
-            data_FloorCreatePlane.verticesToDestroy.Add(newPoint); // cancel �� �����ؾ��� object
+            data_FloorCreatePlane.verticesToDestroy.Add(newPoint); // cancel ?? ????????? object
 
             // newPosition.y = 0.0f;
             data_FloorCreatePlane.newVertices.Add(newPoint.transform.position); // hitInfo.point
 
-
-            data_FloorCreatePlane.lineRenderer.positionCount = data_FloorCreatePlane.newVertices.Count;
+            // data_FloorCreatePlane.lineRenderer.positionCount = data_FloorCreatePlane.newVertices.Count;
             data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount-1, hitInfo.point+Vector3.up*0.0001f);
 
-            // lineLengthCalculator.Calculate();
+            data_FloorCreatePlane.lineRenderer.positionCount++;
+
+            LengthCalculate_Select();
         }
     }
 
-    public void Calculate()
+    private void LengthCalculate_Select()
     {
-        if (data_FloorCreatePlane.lineRenderer.positionCount < 2)
+        int positionCnt = data_FloorCreatePlane.lineRenderer.positionCount;
+        if (positionCnt < 2)
             return;
 
-        // LineRenderer에서 길이를 계산할 선분의 위치들을 가져옴
-        Vector3[] positions = new Vector3[data_FloorCreatePlane.lineRenderer.positionCount];
+        for (int i = 0; i < data_FloorCreatePlane.lengthTextsToDestroy.Count; i++)
+            Destroy(data_FloorCreatePlane.lengthTextsToDestroy[i]);
+
+        data_FloorCreatePlane.lineLengths.Clear();
+        data_FloorCreatePlane.lengthTextsToDestroy.Clear();
+
+        Vector3[] positions = new Vector3[positionCnt];
         data_FloorCreatePlane.lineRenderer.GetPositions(positions);
 
-        // 각 선분의 길이를 계산
-        float[] segmentLengths = new float[data_FloorCreatePlane.lineRenderer.positionCount - 1];
-
-        for (int i = 0; i < data_FloorCreatePlane.lineRenderer.positionCount - 1; i++)
+        for (int i = 0; i < positionCnt; i++)
         {
-            float segmentLength = Vector3.Distance(positions[i], positions[i + 1]);
-            segmentLengths[i] = segmentLength;
-        }
+            float segmentLength = Vector3.Distance(positions[i%positionCnt], positions[(i + 1)%positionCnt]);
+            //segmentLengths[i] = segmentLength;
 
-        // 결과 출력
-        Debug.Log("Segment Lengths:");
-        for (int i = 0; i < segmentLengths.Length; i++)
-        {
-            Debug.Log("Segment " + (i + 1) + ": " + segmentLengths[i]);
+            // 각 점에 텍스트를 생성하여 길이 표시
+            GameObject lengthText = Instantiate(lengthTextPrefab);
+            lengthText.transform.position = ((positions[i % positionCnt] + positions[(i + 1) % positionCnt]) / 2f);
+            //lengthText.transform.rotation = Quaternion.Euler(90.0f, 0.0f, 0.0f);
+            segmentLength = (Mathf.Round(segmentLength * 1000f) / 1000f) * 1000;
+
+            TextMesh textMesh = lengthText.GetComponent<TextMesh>();
+            textMesh.text = segmentLength.ToString(); 
+
+            data_FloorCreatePlane.lineLengths.Add(segmentLength);
+            
+            data_FloorCreatePlane.lengthTextsToDestroy.Add(lengthText);
         }
     }
 
+    // public void VecticesLinesClear()
+    // {
+    //     for (int i = 0; i < data_FloorCreatePlane.verticesToDestroy.Count; i++)
+    //         Destroy(data_FloorCreatePlane.verticesToDestroy[i]);
+    //     data_FloorCreatePlane.verticesToDestroy.Clear();
+
+    //     for (int i = 0; i < data_FloorCreatePlane.lengthTextsToDestroy.Count; i++)
+    //         Destroy(data_FloorCreatePlane.lengthTextsToDestroy[i]);
+    //     data_FloorCreatePlane.lengthTextsToDestroy.Clear();
+
+    //     data_FloorCreatePlane.newVertices.Clear();
+    //     data_FloorCreatePlane.lineLengths.Clear();
+
+    //     data_FloorCreatePlane.lineRenderer.positionCount = 0;
+    // }
 }

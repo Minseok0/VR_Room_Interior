@@ -16,22 +16,22 @@ public class SimpleScale : MonoBehaviour
     {
 
         Scale.x = x;
-        target.transform.localScale.Set(Scale.x, Scale.y, Scale.z);
+        target.gameObject.transform.localScale = Scale;
         xtext.text = "" + target.transform.lossyScale.x;
 
     }
     public void ScaleY(float y)
     {
         Scale.y = y;
-        target.transform.localScale.Set(Scale.x, Scale.y, Scale.z);
-        xtext.text = "" + target.transform.lossyScale.y;
+        target.gameObject.transform.localScale = Scale;
+        ytext.text = "" + target.transform.lossyScale.y;
     }
 
     public void ScaleZ(float z)
     {
-        Scale.x = z;
-        target.transform.localScale.Set(Scale.x, Scale.y, Scale.z);
-        xtext.text = "" + target.transform.lossyScale.z;
+        Scale.z = z;
+        target.gameObject.transform.localScale = Scale;
+        ztext.text = "" + target.transform.lossyScale.z;
     }
 
 }

@@ -24,13 +24,13 @@ public class SaveObject : MonoBehaviour
     {
         GameObject objectWantToCopy = meshUIControl.target;
         objToSpawn = objectWantToCopy;
-        newInstanceofSpawn = Instantiate(objToSpawn);
-        Destroy(objectWantToCopy);
+        
     }
 
     public void Load()
     {
-        Instantiate(objToSpawn);
+        new Vector3(0, 1, 1);
+        newInstanceofSpawn = Instantiate(objToSpawn);
     }
 
 }

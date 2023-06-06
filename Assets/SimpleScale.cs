@@ -14,24 +14,26 @@ public class SimpleScale : MonoBehaviour
     [SerializeField] TextMeshProUGUI ztext;
     public void ScaleX(float x)
     {
-
+        Scale.x = target.transform.localScale.x;
         Scale.x = x;
         target.gameObject.transform.localScale = Scale;
-        xtext.text = "" + target.transform.lossyScale.x;
+        xtext.text = string.Format("{0:0.#}", target.transform.lossyScale.x * 1000);
 
     }
     public void ScaleY(float y)
     {
+        Scale.y = target.transform.localScale.y;
         Scale.y = y;
         target.gameObject.transform.localScale = Scale;
-        ytext.text = "" + target.transform.lossyScale.y;
+        ytext.text = string.Format("{0:0.###}", target.transform.lossyScale.y * 1000);
     }
 
     public void ScaleZ(float z)
     {
+        Scale.z = target.transform.localScale.z;
         Scale.z = z;
         target.gameObject.transform.localScale = Scale;
-        ztext.text = "" + target.transform.lossyScale.z;
+        ztext.text = string.Format("{0:0.###}", target.transform.lossyScale.z * 1000);
     }
 
 }

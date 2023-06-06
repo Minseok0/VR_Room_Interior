@@ -57,6 +57,7 @@ public class NetworkPlayer : MonoBehaviour
         }
     }
 
+    //[PunRPC]
     void UpdateHandAnimation(InputDevice targetDevice, Animator handAnimator)
     {
         if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
@@ -78,10 +79,10 @@ public class NetworkPlayer : MonoBehaviour
         }
     }
 
+    //[PunRPC]
     void MapPosition(Transform target, Transform rigTransform)
     {
         target.position = rigTransform.position;
         target.rotation = rigTransform .rotation;
-
     }
 }

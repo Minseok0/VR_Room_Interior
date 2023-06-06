@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1209,9 +1209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1caf57c6b3e0c47ae8bf3970997f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 94367379}
-  xRRayInteractor: {fileID: 1317604602}
-  xRDirectInteractor: {fileID: 94367375}
 --- !u!135 &94367377
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2392,83 +2389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd181e6ba52999e49aeb04281d8f3f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
-  m_Colliders: []
-  m_InteractionLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_InteractionLayers:
-    m_Bits: 1
-  m_DistanceCalculationMode: 1
-  m_SelectMode: 0
-  m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
-  m_OverrideGazeTimeToSelect: 0
-  m_GazeTimeToSelect: 0.5
-  m_OverrideTimeToAutoDeselectGaze: 0
-  m_TimeToAutoDeselectGaze: 3
-  m_AllowGazeAssistance: 0
-  m_FirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Activated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Deactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_StartingInteractionStrengthFilters: []
-  m_OnFirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnLastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectCanceled:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnActivate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnDeactivate:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &206033873
 GameObject:
   m_ObjectHideFlags: 0
@@ -8528,9 +8448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1caf57c6b3e0c47ae8bf3970997f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 750030062}
-  xRRayInteractor: {fileID: 328046389}
-  xRDirectInteractor: {fileID: 750030058}
 --- !u!114 &750030058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9957,12 +9874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eccedbe5d6941c42bf9e17eed58f2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xRRayInteractor: {fileID: 0}
-  lineRenderer: {fileID: 0}
-  defaultEmptyMaterial: {fileID: 2100000, guid: 197c3d66e0eeba74993d16fdb127ec8a,
-    type: 2}
-  defaultTargetedMaterial: {fileID: 2100000, guid: a87b2b9575f8cad41a6893cb2c33b5f7,
-    type: 2}
 --- !u!1 &852546149
 GameObject:
   m_ObjectHideFlags: 0
@@ -11408,26 +11319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86fb260bc1dd1240b135b0f60f147f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardFollow: {fileID: 963194228}
-  headCamera: {fileID: 963194227}
-  trackingContainer: {fileID: 1243351203}
-  l_hand: {fileID: 750030057}
-  r_hand: {fileID: 94367376}
-  enableMovement: 1
-  maxMoveSpeed: 1.5
-  moveAcceleration: 10
-  heightSmoothSpeed: 20
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 8
-  moveAction: {fileID: 6972639530819350904, guid: 8b9c6eb28d52a49468291baa8c4d0e5a,
-    type: 3}
-  snapTurning: 1
-  snapTurnAngle: 30
-  smoothTurnSpeed: 10
-  turnDeadzone: 0.4
-  turnAction: {fileID: -6493913391331992944, guid: 8b9c6eb28d52a49468291baa8c4d0e5a,
-    type: 3}
 --- !u!1 &1016809219
 GameObject:
   m_ObjectHideFlags: 0
@@ -13154,12 +13045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eccedbe5d6941c42bf9e17eed58f2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xRRayInteractor: {fileID: 0}
-  lineRenderer: {fileID: 0}
-  defaultEmptyMaterial: {fileID: 2100000, guid: 197c3d66e0eeba74993d16fdb127ec8a,
-    type: 2}
-  defaultTargetedMaterial: {fileID: 2100000, guid: a87b2b9575f8cad41a6893cb2c33b5f7,
-    type: 2}
 --- !u!1 &1185771687
 GameObject:
   m_ObjectHideFlags: 0
@@ -16817,10 +16702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45bb001f42286aa4e8892b05d5474ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 963194228}
-  distanceFromPlayer: 2
-  xOffset: -1.5
-  toggleKey: 105
 --- !u!1 &1460289943
 GameObject:
   m_ObjectHideFlags: 0
@@ -21280,75 +21161,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865586980}
   m_CullTransparentMesh: 1
---- !u!1001 &1866519446
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
-        type: 3}
-      propertyPath: m_Name
-      value: XR Device Simulator
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
 --- !u!1 &1883434987
 GameObject:
   m_ObjectHideFlags: 0

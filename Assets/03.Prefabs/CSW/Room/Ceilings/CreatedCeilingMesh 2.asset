@@ -11,14 +11,14 @@ Mesh:
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
-    indexCount: 15
+    indexCount: 3
     topology: 0
     baseVertex: 0
     firstVertex: 0
-    vertexCount: 7
+    vertexCount: 3
     localAABB:
-      m_Center: {x: -0.36132622, y: 0, z: -0.28117824}
-      m_Extent: {x: 3.040722, y: 0, z: 2.7384202}
+      m_Center: {x: 0.121362686, y: 0, z: -0.4870453}
+      m_Extent: {x: 3.7408695, y: 0, z: 3.3380146}
   m_Shapes:
     vertices: []
     shapes: []
@@ -35,10 +35,10 @@ Mesh:
   m_KeepVertices: 1
   m_KeepIndices: 1
   m_IndexFormat: 0
-  m_IndexBuffer: 060005000000050004000000040003000000030002000000020001000000
+  m_IndexBuffer: 020001000000
   m_VertexData:
     serializedVersion: 3
-    m_VertexCount: 7
+    m_VertexCount: 3
     m_Channels:
     - stream: 0
       offset: 0
@@ -96,8 +96,8 @@ Mesh:
       offset: 0
       format: 0
       dimension: 0
-    m_DataSize: 168
-    _typelessdata: 80583c3f00000000e06d663f00000000000080bf000000006c0b1b400000000020364e3f00000000000080bf00000000387b2b4000000000ac7b22c000000000ffff7fbf00000000c05276bf000000001a4141c000000000000080bf0000000028bb59c000000000c02e87bf00000000000080bf000000008cf613c000000000a4e71c4000000000000080bf0000000000a7563f0000000074431d4000000000000080bf00000000
+    m_DataSize: 72
+    _typelessdata: d02e774000000000c8cd74c000000000000080bf0000000000a667c000000000f05d793f00000000000080bf00000000008d78be000000004876364000000000000080bf00000000
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -151,8 +151,8 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: -0.36132622, y: 0, z: -0.28117824}
-    m_Extent: {x: 3.040722, y: 0, z: 2.7384202}
+    m_Center: {x: 0.121362686, y: 0, z: -0.4870453}
+    m_Extent: {x: 3.7408695, y: 0, z: 3.3380146}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 

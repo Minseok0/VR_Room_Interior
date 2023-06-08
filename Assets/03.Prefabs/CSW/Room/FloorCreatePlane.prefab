@@ -188,7 +188,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416667634897854434}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -274,10 +274,34 @@ MonoBehaviour:
       m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6416667634897854442}
+        m_TargetAssemblyTypeName: SetFloorVertex, Assembly-CSharp
+        m_MethodName: HoverEntered_NewVertex
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6416667634897854442}
+        m_TargetAssemblyTypeName: SetFloorVertex, Assembly-CSharp
+        m_MethodName: HoverExited_NewVertex
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstSelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -288,8 +312,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6416667634897854442}
-        m_TargetAssemblyTypeName: SetNewVertices, Assembly-CSharp
-        m_MethodName: SetNewVertex
+        m_TargetAssemblyTypeName: SetFloorVertex, Assembly-CSharp
+        m_MethodName: SelectNewVertex
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -451,6 +475,9 @@ MonoBehaviour:
   data_FloorCreatePlane: {fileID: 11400000, guid: 9d8e3e3d21502d54f9aa8ddd06bb3770,
     type: 2}
   vertexMaterial: {fileID: 2100000, guid: 2bc73cba2d84db04c8beb0e89a09aa57, type: 2}
+  lengthTextPrefab: {fileID: 3029203152506422664, guid: 7bc6d168caa156d43a0c66768bd6a4a9,
+    type: 3}
+  lengthTextToDestroy: []
 --- !u!1 &6416667635152987316
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,8 +625,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1862ed4d352c5d48951ffa08a415cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createdFloor_MeshPath: Assets/03.Prefabs/CSW/Room/Floors/Meshes/
-  createdCeiling_MeshPath: Assets/03.Prefabs/CSW/Room/Ceilings/Meshes/
+  XR_RigTr: {fileID: 0}
+  createNewFloorButton: {fileID: 0}
+  createdFloor_MeshPath: Assets/03.Prefabs/CSW/Room/Floors/
+  createdCeiling_MeshPath: Assets/03.Prefabs/CSW/Room/Ceilings/
   createdFloor_PrefabPath: Assets/03.Prefabs/CSW/Room/Floors/
   createdCeiling_PrefabPath: Assets/03.Prefabs/CSW/Room/Ceilings/
   createdRooom_PrefabPath: Assets/03.Prefabs/CSW/Room/Rooms/
@@ -608,14 +637,12 @@ MonoBehaviour:
     type: 2}
   roomObject: {fileID: 0}
   floorObject: {fileID: 0}
-  ceilingObject: {fileID: 0}
-  ceilingMat: {fileID: 2100000, guid: c1ba65593ddf02448a35938a23262079, type: 2}
   wallPrefab: {fileID: 4913990278949097337, guid: 9d42a144829389f4eb4ca2e10935dbcf,
     type: 3}
   newFloorCenter: {x: 0, y: 0, z: 0}
   newCeilingCenter: {x: 0, y: 0, z: 0}
   triangles: 
-  wallHeight: 2.2
+  wallHeight: 2.5
 --- !u!1 &6416667635640861642
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.03, y: 0}
+  m_AnchoredPosition: {x: 1, y: 0}
   m_SizeDelta: {x: 0.9, y: 0.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6416667636160779932

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3817,6 +3817,7 @@ MonoBehaviour:
   speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 2126154996}
   usePrimaryRecorder: 0
+  cppCompatibilityMode: 0
   Settings:
     AppIdRealtime: 
     AppIdFusion: 
@@ -3869,6 +3870,8 @@ MonoBehaviour:
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   interestGroup: 0
+  useTargetPlayers: 0
+  targetPlayers: 
   debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
@@ -3886,10 +3889,10 @@ MonoBehaviour:
     Mode: 0
     CategoryOptions: 0800000004000000
   editorAudioSessionPreset: 0
-  androidNativeMicrophoneSettings:
-    AcousticEchoCancellation: 1
-    AutomaticGainControl: 1
-    NoiseSuppression: 1
+  androidMicrophoneSettings:
+    EnableAEC: 1
+    EnableAGC: 1
+    EnableNS: 1
   stopRecordingWhenPaused: 0
   useOnAudioFilterRead: 0
   useMicrophoneTypeFallback: 1

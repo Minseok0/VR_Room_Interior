@@ -451,6 +451,8 @@ MonoBehaviour:
   data_FloorCreatePlane: {fileID: 11400000, guid: 9d8e3e3d21502d54f9aa8ddd06bb3770,
     type: 2}
   vertexMaterial: {fileID: 2100000, guid: 2bc73cba2d84db04c8beb0e89a09aa57, type: 2}
+  lengthTextPrefab: {fileID: 0}
+  lengthTextToDestroy: []
 --- !u!1 &6416667635152987316
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1862ed4d352c5d48951ffa08a415cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  XR_RigTr: {fileID: 0}
+  createNewFloorButton: {fileID: 0}
   createdFloor_MeshPath: Assets/03.Prefabs/CSW/Room/Floors/Meshes/
   createdCeiling_MeshPath: Assets/03.Prefabs/CSW/Room/Ceilings/Meshes/
   createdFloor_PrefabPath: Assets/03.Prefabs/CSW/Room/Floors/
@@ -608,8 +612,6 @@ MonoBehaviour:
     type: 2}
   roomObject: {fileID: 0}
   floorObject: {fileID: 0}
-  ceilingObject: {fileID: 0}
-  ceilingMat: {fileID: 2100000, guid: c1ba65593ddf02448a35938a23262079, type: 2}
   wallPrefab: {fileID: 4913990278949097337, guid: 9d42a144829389f4eb4ca2e10935dbcf,
     type: 3}
   newFloorCenter: {x: 0, y: 0, z: 0}

@@ -19,7 +19,7 @@ public class SetFloorVertex : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rayInteractor_right = GameObject.Find("RightHand Controller").GetComponent<XRRayInteractor>();
+        rayInteractor_right = GameObject.Find("RightHand Controller_CreateRoom").GetComponent<XRRayInteractor>();
 
         data_FloorCreatePlane.floorCreatePlane = this.gameObject;
 
@@ -121,23 +121,27 @@ public class SetFloorVertex : MonoBehaviour
     public void SelectNewVertex()
     {
         bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
+        if (hitResult == false)
+            return;
+        if(hitInfo.transform.GetComponent<SetFloorVertex>() == false)
+            return;
+
         GameObject newPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         NewPointSetting(newPoint);
         newPoint.transform.position = hitInfo.point;
-        if (hitResult)
-        {
-            data_FloorCreatePlane.verticesToDestroy.Add(newPoint); // cancel ?? ????????? object
 
-            // newPosition.y = 0.0f;
-            data_FloorCreatePlane.newVertices.Add(newPoint.transform.position); // hitInfo.point
+        data_FloorCreatePlane.verticesToDestroy.Add(newPoint);
 
-            // data_FloorCreatePlane.lineRenderer.positionCount = data_FloorCreatePlane.newVertices.Count;
-            data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount-1, hitInfo.point+Vector3.up*0.0001f);
+        // newPosition.y = 0.0f;
+        data_FloorCreatePlane.newVertices.Add(newPoint.transform.position); // hitInfo.point
 
-            data_FloorCreatePlane.lineRenderer.positionCount++;
+        // data_FloorCreatePlane.lineRenderer.positionCount = data_FloorCreatePlane.newVertices.Count;
+        data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount-1, hitInfo.point+Vector3.up*0.0001f);
 
-            LengthCalculate_Select();
-        }
+        data_FloorCreatePlane.lineRenderer.positionCount++;
+
+        LengthCalculate_Select();
+
     }
 
     private void LengthCalculate_Select()

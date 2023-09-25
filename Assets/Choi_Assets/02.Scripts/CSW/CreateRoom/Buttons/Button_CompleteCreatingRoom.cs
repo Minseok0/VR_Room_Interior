@@ -10,24 +10,33 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
     public Transform XR_RigTr;
     public GameObject createNewFloorButton;
 
-    public string createdFloor_MeshPath;
-    public string createdCeiling_MeshPath;
-    public string createdFloor_PrefabPath;
-    public string createdCeiling_PrefabPath;
+    [Header("생성 경로")]
+    [SerializeField]
+    private string createdFloor_MeshPath;
+    [SerializeField]
+    private string createdFloor_PrefabPath;
+    [SerializeField]
+    private string createdCeiling_MeshPath;
+    [SerializeField]
+    private string createdCeiling_PrefabPath;
 
-    public string createdRooom_PrefabPath;
+    [SerializeField]
+    private string createdRooom_PrefabPath;
 
-    public Data_RoomCount data_RoomCount;
-    public Data_FloorCreatePlane data_FloorCreatePlane;
+    [Space(10)]
+    [SerializeField]
+    private Data_RoomCount data_RoomCount;
+    [SerializeField]
+    private Data_FloorCreatePlane data_FloorCreatePlane;
 
-    public GameObject roomObject;
-    public GameObject floorObject;
+    private GameObject roomObject;
+    private GameObject floorObject;
     //public GameObject ceilingObject;
     //public Material ceilingMat;
-
+    [Space(10)]
     public GameObject wallPrefab;
 
-    public Vector3 newFloorCenter, newCeilingCenter;
+    private Vector3 newFloorCenter; // , newCeilingCenter
 
     public List<int> triangles;
 
@@ -54,7 +63,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
         CreateCeiling();
 
-        PrefabUtility.SaveAsPrefabAssetAndConnect(roomObject, createdRooom_PrefabPath + roomObject.name + ".prefab", InteractionMode.UserAction );
+        PrefabUtility.SaveAsPrefabAssetAndConnect(roomObject, createdRooom_PrefabPath + roomObject.name + ".prefab", InteractionMode.UserAction, out bool success);
         data_RoomCount.roomCount++;
 
         //Destroy(roomObject);
@@ -291,14 +300,14 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         }
     }
 
-    // Make walls _ 벽 생성
+    // Ceiling _ 천장 생성
     private void CreateCeiling()
     {
         GameObject innerCeiling = GameObject.CreatePrimitive(PrimitiveType.Plane);
 
         innerCeiling.name = "InnerCeiling " + data_RoomCount.roomCount;
 
-        newCeilingCenter = Vector3.zero;
+        //newCeilingCenter = Vector3.zero;
         mesh = new Mesh();
         mesh.name = "CreatedCeilingMesh " + data_RoomCount.roomCount;
 

@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class PlacementChecker : MonoBehaviour
 {
-    private List<Collider> colliderList; // �浹�� ������Ʈ�� ������ ����Ʈ
-    public int colliderCnt; // �浹�� ������Ʈ�� ����
+    //private List<Collider> colliderList; 
+    public int colliderCnt; 
 
-    public int layerFloor; // ���� ���̾� (�����ϰ� �� ��)
-    private const int IGNORE_RAYCAST_LAYER = 2;  // ignore_raycast (�����ϰ� �� ��)
+    public int layerFloor; 
+    private const int IGNORE_RAYCAST_LAYER = 2;  // ignore_raycast 
 
     public Material originalMat;
     public Material RedFurniture;
     
     private void Start()
     {
-        colliderList = new List<Collider>();
+        layerFloor = LayerMask.NameToLayer("FLOOR");
+        //colliderList = new List<Collider>();
         originalMat = this.gameObject.GetComponent<MeshRenderer>().material;
-        RedFurniture = AssetDatabase.LoadAssetAtPath<Material>("Assets/04.Images/CSW/Materials/RedFurniture.mat");
+        RedFurniture = RedFurniture != null ? RedFurniture : AssetDatabase.LoadAssetAtPath<Material>("Assets/Choi_Assets/Material/RedFurniture.mat");
     }
 
     private void SetMaterial(Material mat)
@@ -52,7 +53,6 @@ public class PlacementChecker : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
         if (other.gameObject.layer != layerFloor && other.gameObject.layer != IGNORE_RAYCAST_LAYER)
         {
             //colliderList.Remove(other);

@@ -87,9 +87,9 @@ public class CanvasPointer : MonoBehaviour
     {
         if (raycastResult.gameObject.CompareTag("Inventory"))
         {
-            raycastResult.gameObject.GetComponentInParent<InventorySystem>().InventoryIntersected(
+            /*raycastResult.gameObject.GetComponentInParent<InventorySystem>().InventoryIntersected(
                 raycastResult.gameObject.GetComponentInParent<InventoryCellObject>().CellCoord,
-                transform.GetComponentInParent<Input_Inventory.Hand>());
+                transform.GetComponentInParent<Input_Inventory.Hand>());*/
         }
     }
 
@@ -97,8 +97,8 @@ public class CanvasPointer : MonoBehaviour
     {
         if (lastRaycastResult.gameObject != null && lastRaycastResult.gameObject.CompareTag("Inventory"))
         {
-            lastRaycastResult.gameObject.GetComponentInParent<InventorySystem>().StopIntersected(
-               lastRaycastResult.gameObject.GetComponentInParent<InventoryCellObject>().CellCoord);
+            /*lastRaycastResult.gameObject.GetComponentInParent<InventorySystem>().StopIntersected(
+               lastRaycastResult.gameObject.GetComponentInParent<InventoryCellObject>().CellCoord);*/
         }
     }
 }

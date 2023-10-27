@@ -46,7 +46,7 @@ public class SetFloorVertex : MonoBehaviour
         isHovering = true;
 
         bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
-        if(hitResult)
+        if(hitResult && hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("DRAWABLE"))
         {
             data_FloorCreatePlane.lineRenderer.positionCount++;
             //data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount - 1, hitInfo.point + Vector3.up * 0.0001f);
@@ -64,7 +64,7 @@ public class SetFloorVertex : MonoBehaviour
             {
                 bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
 
-                if (hitResult)
+                if (hitResult && hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("DRAWABLE"))
                 {
                     data_FloorCreatePlane.lineRenderer.SetPosition(data_FloorCreatePlane.lineRenderer.positionCount - 1, hitInfo.point + Vector3.up * 0.0001f);
 

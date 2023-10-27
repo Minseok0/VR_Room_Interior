@@ -49,7 +49,6 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
     private List<Vector3> newVertices_translated;
 
-
     //https://bloodstrawberry.tistory.com/996
 
     // 새로운 Mesh 생성 후 prefab으로 저장

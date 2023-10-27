@@ -12,9 +12,9 @@ public class Slot : MonoBehaviour
     public Image slotImage;
     Color originalColor;
 
-    public XRRayInteractor xRRayInteractor;
+    [SerializeField] private XRRayInteractor xRRayInteractor;
 
-    public Transform objectInHand;
+    [SerializeField] private Transform objectInHand;
 
     FixedJoint joint;
 
@@ -22,7 +22,6 @@ public class Slot : MonoBehaviour
     {
         slotImage = GetComponentInChildren<Image>();
         originalColor = slotImage.color;
-
         joint = GetComponent<FixedJoint>();
     }
 

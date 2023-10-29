@@ -19,7 +19,8 @@ public class SetFloorVertex : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rayInteractor_right = GameObject.Find("RightHand Controller_CreateRoom").GetComponent<XRRayInteractor>();
+        if(rayInteractor_right ==null)
+            rayInteractor_right = GameObject.Find("Right Ray Interactor").GetComponent<XRRayInteractor>();
 
         data_FloorCreatePlane.floorCreatePlane = this.gameObject;
 

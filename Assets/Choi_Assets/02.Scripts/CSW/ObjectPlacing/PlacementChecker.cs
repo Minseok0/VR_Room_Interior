@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlacementChecker : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlacementChecker : MonoBehaviour
     
     private void Start()
     {
+        //gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         layerFloor = LayerMask.NameToLayer("FLOOR");
         //colliderList = new List<Collider>();
         originalMat = this.gameObject.GetComponent<MeshRenderer>().material;
@@ -41,7 +43,15 @@ public class PlacementChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != layerFloor && other.gameObject.layer != IGNORE_RAYCAST_LAYER)
+        // 牢亥配府 家南老 锭
+        if(other.GetComponent<XRSocketInteractor>() != null)
+        {
+            //gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            //print("transform.localScale " + gameObject.transform.localScale);
+            return;
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("FURNITURE"))
         {
             //colliderList.Add(other);
 
@@ -53,7 +63,15 @@ public class PlacementChecker : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer != layerFloor && other.gameObject.layer != IGNORE_RAYCAST_LAYER)
+        // 牢亥配府 家南老 锭
+        if (other.GetComponent<XRSocketInteractor>() != null)
+        {
+            //gameObject.transform.localScale = Vector3.one;
+            //print("transform.localScale " + gameObject.transform.localScale); 
+            return;
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("FURNITURE"))
         {
             //colliderList.Remove(other);
 

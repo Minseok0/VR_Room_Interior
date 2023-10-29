@@ -2176,5 +2176,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fdb19e208a9e67499c4e409505344a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachFurniture: {fileID: 0}
+  attachTransform: {fileID: 0}
   rayInteractor: {fileID: 0}

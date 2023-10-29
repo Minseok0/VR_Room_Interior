@@ -55,8 +55,10 @@ public class Slot : MonoBehaviour
 
     public void Contact()
     {
-        if (ItemInSlot != null) return;
+        if (ItemInSlot == null) return;
+
         if (!IsItem(objectInHand.gameObject)) return;
+
         if(objectInHand != null) {
             InsertItem(objectInHand.gameObject);
         }

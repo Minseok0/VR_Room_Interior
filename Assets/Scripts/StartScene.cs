@@ -8,7 +8,7 @@ public class StartScene : MonoBehaviour
 {
     public void LoadStartScene()
     {
-        SceneManager.LoadScene("11_MainPlay");
+        SceneManager.LoadScene("Main");
     }
 
     public void ExitGame()

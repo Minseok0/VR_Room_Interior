@@ -11,19 +11,22 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        if (optionMenu == null)
-        {
-            Debug.LogWarning("optionMenu == null");
-            GameObject.Find("OptionMenu");
-        }
+        print(optionMenu.name);
+        //if (optionMenu == null)
+        //{
+        //    Debug.LogWarning("optionMenu == null");
+        //    GameObject.Find("OptionMenu");
+        //}
+        optionMenu = GameObject.Find("OptionMenu");
     }
 
     public void ToggleOptionMenu()
     {
+        if (optionMenu == null)
+        {
+            optionMenu = GameObject.Find("OptionMenu");
+            print("Find");
+        }
         optionMenu.SetActive(!optionMenu.activeSelf);
     }
-
-
-
-
 }

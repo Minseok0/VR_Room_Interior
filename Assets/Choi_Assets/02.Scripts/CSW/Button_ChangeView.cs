@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class Button_ChangeView : MonoBehaviour
 {
-    public Transform XR_RigTr;
-    public Vector3 cameraDirection;
+    private Transform XR_Origin;
+    private Vector3 cameraDirection;
+
+    private void Start()
+    {
+        if(XR_Origin == null) {
+            XR_Origin = GameObject.Find("XR Origin").transform;
+        }
+
+    }
     public void MoveBackward()
     {
         cameraDirection = (-Camera.main.transform.forward) * 5.0f; //  + Camera.main.transform.up
-        XR_RigTr.transform.position += cameraDirection;
+        XR_Origin.transform.position += cameraDirection;
     }
     public void MoveForward()
     {
         cameraDirection = (Camera.main.transform.forward ) * 5.0f; //- Camera.main.transform.up
-        XR_RigTr.transform.position += cameraDirection;
+        XR_Origin.transform.position += cameraDirection;
     }
 
 }

@@ -736,6 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scale: {x: 0, y: 0, z: 0}
+  pivot: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   xtext: {fileID: 1004367971}
   ytext: {fileID: 1889766609}
@@ -2935,7 +2936,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 58d3895a87338044cb21a02a2c6d6ba4, type: 2}
-  Matball: {fileID: 439533172952675283, guid: e6c9d077f2feb024d90e72cd8a3ae349, type: 3}
+  matBall: {fileID: 0}
+  previewImage: {fileID: 0}
+  sliderR: {fileID: 0}
+  sliderG: {fileID: 0}
+  sliderB: {fileID: 0}
+  matColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &533989098
 Transform:
   m_ObjectHideFlags: 0
@@ -8457,6 +8463,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: XR Device Simulator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}

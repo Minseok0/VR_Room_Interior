@@ -12,7 +12,8 @@ public class Button_MoveToCreateRoom : MonoBehaviour
 
     private void Start()
     {
-        XR_RigTr = this.transform.root.Find("XR Rig");
+        if(XR_RigTr == null)
+            XR_RigTr = GameObject.Find("XR Origin").transform;
         data_FloorCreatePlane.floorCreatePlanePosition = floorCreatePlaneTr.position;
     }
 

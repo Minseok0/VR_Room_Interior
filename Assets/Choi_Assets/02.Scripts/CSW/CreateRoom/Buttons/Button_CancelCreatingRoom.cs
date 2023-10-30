@@ -5,12 +5,20 @@ using UnityEngine.UI;
 
 public class Button_CancelCreatingRoom : MonoBehaviour
 {
-    public Data_FloorCreatePlane data_FloorCreatePlane;
+    [SerializeField] private Data_FloorCreatePlane data_FloorCreatePlane;
 
     //public Transform floorCreatePlaneTr; // �ٴڸ� �۾��� transform
-    public Transform XR_RigTr; // �÷��̾� ĳ���� transform
+    [SerializeField] private Transform XR_OriginTr; // �÷��̾� ĳ���� transform
 
-    public GameObject createNewFloorButton;
+    [SerializeField] private GameObject createNewFloorButton;
+
+    private void Awake()
+    {
+        if(XR_OriginTr == null)
+        {
+            XR_OriginTr = GameObject.Find("XR Origin").transform;
+        }
+    }
 
     public void Cancel()
     {
@@ -32,7 +40,7 @@ public class Button_CancelCreatingRoom : MonoBehaviour
         data_FloorCreatePlane.lengthTextsToDestroy.Clear();
 
         // �÷��̾� ����ġ
-        XR_RigTr.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
+        XR_OriginTr.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
 
         createNewFloorButton.SetActive(true);
 

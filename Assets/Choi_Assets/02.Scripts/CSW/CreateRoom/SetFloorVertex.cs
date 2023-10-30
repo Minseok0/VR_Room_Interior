@@ -81,7 +81,10 @@ public class SetFloorVertex : MonoBehaviour
         isHovering = false;
 
         StopCoroutine(HoveringNewVertex());
-        data_FloorCreatePlane.lineRenderer.positionCount--;
+        if(data_FloorCreatePlane.lineRenderer.positionCount > 0)
+        {
+            data_FloorCreatePlane.lineRenderer.positionCount--;
+        }
 
         LengthCalculate_Select();
     }
@@ -121,10 +124,11 @@ public class SetFloorVertex : MonoBehaviour
 
     public void SelectNewVertex()
     {
+        print("SelectNewVertex");
         bool hitResult = rayInteractor_right.TryGetCurrent3DRaycastHit(out RaycastHit hitInfo);
         if (hitResult == false)
             return;
-        if(hitInfo.transform.GetComponent<SetFloorVertex>() == false)
+        if(hitInfo.transform.TryGetComponent<SetFloorVertex>(out var _) == false)
             return;
 
         GameObject newPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);

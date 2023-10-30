@@ -13,7 +13,7 @@ public class OptionMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        tr.position = transform.parent.position + tr.parent.forward*0.5f;
+        tr.position = transform.parent.position + tr.parent.forward*0.5f + tr.parent.up*(-0.2f);
     }
 
     public void ButtonPressed_Close()

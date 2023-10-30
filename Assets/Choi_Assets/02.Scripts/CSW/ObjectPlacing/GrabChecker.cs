@@ -10,7 +10,6 @@ public class GrabChecker : MonoBehaviour
     private GameObject parentGo;
     [SerializeField] bool isGrabbed = false;
     [SerializeField] bool isSocketed = false;
-    private Collider collider;
 
     private void Start()
     {
@@ -38,7 +37,6 @@ public class GrabChecker : MonoBehaviour
             gameObject.GetComponent<Collider>().isTrigger = true;
             arg0.interactableObject.transform.parent = parentGo.transform;
             arg0.interactableObject.transform.parent.localScale = Vector3.one * 0.1f;
-            print(0);
         }
         // 소켓에 들어갈 때
         else if (arg0.interactorObject is XRSocketInteractor)
@@ -47,7 +45,6 @@ public class GrabChecker : MonoBehaviour
             gameObject.GetComponent<Collider>().isTrigger = false;
             arg0.interactableObject.transform.parent = parentGo.transform;
             arg0.interactableObject.transform.parent.localScale = Vector3.one * 0.1f;
-            print(1);
         }
     }
 
@@ -62,7 +59,6 @@ public class GrabChecker : MonoBehaviour
             arg0.interactableObject.transform.parent.localScale = Vector3.one;
             arg0.interactableObject.transform.parent = null;
             transform.localScale = Vector3.one;
-            print(2);
         }
         // 소켓에서 나올 때
         //else if (arg0.interactorObject is XRSocketInteractor) 

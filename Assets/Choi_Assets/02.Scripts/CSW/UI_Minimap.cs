@@ -19,16 +19,21 @@ public class UI_Minimap : MonoBehaviour
 
     private void Awake()
     {
-        //textMapName.text = SceneManager.GetActiveScene().name;
+        if (minimapCamera == null)
+            minimapCamera = GameObject.Find("Minimap Camera").GetComponent<Camera>();
     }
 
     public void ZoomIn()
     {
+        print("zoom in");
         minimapCamera.orthographicSize = Mathf.Max(minimapCamera.orthographicSize - zoomOneStep, zoomMin );
+        print(minimapCamera.orthographicSize);
     }
 
     public void ZoomOut()
     {
+        print("zoom out");
         minimapCamera.orthographicSize = Mathf.Min(minimapCamera.orthographicSize + zoomOneStep, zoomMax);
+        print(minimapCamera.orthographicSize);
     }
 }

@@ -7,8 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Button_CompleteCreatingRoom : MonoBehaviour
 {
-    public Transform XR_RigTr;
-    public GameObject createNewFloorButton;
+    [SerializeField] private Transform XR_OriginTr;
+    [SerializeField] private GameObject createNewFloorButton;
 
     [Header("생성 경로")]
     [SerializeField]
@@ -51,6 +51,14 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
 
     //https://bloodstrawberry.tistory.com/996
 
+    private void Awake()
+    {
+        if(XR_OriginTr == null)
+        {
+            XR_OriginTr = GameObject.Find("XR Origin").transform;
+        }
+    }
+
     // 새로운 Mesh 생성 후 prefab으로 저장
     private void CreateNewRoomPrefab()
     {
@@ -68,7 +76,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         //Destroy(roomObject);
         roomObject.transform.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
 
-        XR_RigTr.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
+        XR_OriginTr.SetPositionAndRotation(data_FloorCreatePlane.originalPlayerPosition, data_FloorCreatePlane.originalPlayerRotation);
         createNewFloorButton.SetActive(true);
     }
 
@@ -221,6 +229,7 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
     {
         newVertices_translated = new();
 
+
         floorObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         floorObject.name = "CreatedFloor " + data_RoomCount.roomCount;
 
@@ -260,6 +269,9 @@ public class Button_CompleteCreatingRoom : MonoBehaviour
         //floorObject.AddComponent<Teleportation
         // floorObject is room object's child.
         floorObject.transform.SetParent(roomObject.transform);
+
+        floorObject.AddComponent<TeleportationArea>();
+        floorObject.GetComponent<TeleportationArea>().interactionLayers |= 1 << 31;
     }
 
     // walls _ 벽 생성

@@ -6,19 +6,19 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CreatedFloorMesh 2
+  m_Name: CreatedFloorMesh 7
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
-    indexCount: 6
+    indexCount: 9
     topology: 0
     baseVertex: 0
     firstVertex: 0
-    vertexCount: 4
+    vertexCount: 5
     localAABB:
-      m_Center: {x: 0.057034016, y: 0, z: 0.028570652}
-      m_Extent: {x: 2.4320521, y: 0, z: 2.6666007}
+      m_Center: {x: 0.3591256, y: 0, z: 0.062598705}
+      m_Extent: {x: 3.0980048, y: 0, z: 1.9079404}
   m_Shapes:
     vertices: []
     shapes: []
@@ -35,10 +35,10 @@ Mesh:
   m_KeepVertices: 1
   m_KeepIndices: 1
   m_IndexFormat: 0
-  m_IndexBuffer: 000001000200000002000300
+  m_IndexBuffer: 000001000200000002000300000003000400
   m_VertexData:
     serializedVersion: 3
-    m_VertexCount: 4
+    m_VertexCount: 5
     m_Channels:
     - stream: 0
       offset: 0
@@ -96,8 +96,8 @@ Mesh:
       offset: 0
       format: 0
       dimension: 0
-    m_DataSize: 96
-    _typelessdata: 304d1f4000000000d87cb23f000000000000803f0000000010b7523f000000007cd528c0000000000000803f000000004c0018c00000000050cdb9bf000000000000803f00000000a0ea6fbf00000000b07d2c40000000000000803f00000000
+    m_DataSize: 120
+    _typelessdata: a0415d4000000000e0ed843e000000000000803f00000000f0b0b53f0000000038efdebf000000000000803f000000003c081cc0000000002834ecbf000000000000803f00000000cc492fc00000000038adad3f000000000000803f0000000040bf993e00000000a03afc3f000000000000803f00000000
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -151,8 +151,8 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: 0.057034016, y: 0, z: 0.028570652}
-    m_Extent: {x: 2.4320521, y: 0, z: 2.6666007}
+    m_Center: {x: 0.3591256, y: 0, z: 0.062598705}
+    m_Extent: {x: 3.0980048, y: 0, z: 1.9079404}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 

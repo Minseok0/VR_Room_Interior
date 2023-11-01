@@ -31,8 +31,8 @@ public class AdditionalKeyManager : MonoBehaviour
 
     public void OnLeftPrimaryButtonPerformed(InputAction.CallbackContext context)
     {
-        Managers.UI.ToggleOptionMenu();
-        //Managers.UI.ToggleOptionMenu();
+        if (leftTarget != null)
+            leftTarget.SetActive(!leftTarget.activeSelf);
     }
 
     /*private void OnPrimaryButtonRelease(InputAction.CallbackContext context)

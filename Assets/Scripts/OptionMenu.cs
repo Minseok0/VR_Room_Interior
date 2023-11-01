@@ -13,7 +13,7 @@ public class OptionMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        tr.position = transform.parent.position + tr.parent.forward*0.5f + tr.parent.up*(-0.2f);
+        tr.position = Camera.main.transform.position + Camera.main.transform.forward*0.5f + Camera.main.transform.up * (-0.2f);
     }
 
     public void ButtonPressed_Close()
@@ -26,9 +26,10 @@ public class OptionMenu : MonoBehaviour
         Debug.Log("OnKeyCheckButtonPressed");
     }
 
-    public void ButtonPressed_SoundSetting()
+    public void ButtonPressed_HeightSetting()
     {
-        Debug.Log("SoundSettingButtonPressed");
+        Debug.Log("HeightSettingButtonPressed");
+
 
     }
 

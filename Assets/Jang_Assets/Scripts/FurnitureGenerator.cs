@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class FurnitureGenerator : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class FurnitureGenerator : MonoBehaviour
     public GameObject legTarget;
     public List<GameObject> previewTop;
     public List<GameObject> previewLeg;
+    public meshUIControl meshUIControl;
     // Start is called before the first frame update
 
     public void SetTop(GameObject target)
@@ -25,7 +27,7 @@ public class FurnitureGenerator : MonoBehaviour
     public void GenerateFurniture(GameObject target)
     {
         //Instantiate(target, gameObject.transform.position + gameObject.transform.forward, Quaternion.identity);
-        GameObject cloneObj = new GameObject("newFurniture");
+        GameObject cloneObj = Instantiate(target,new Vector3(0,0,0),Quaternion.identity);
         GameObject topClone = Instantiate(topTarget);
         topClone.transform.parent = cloneObj.transform;
 

@@ -16,21 +16,21 @@ public class meshUIControl : MonoBehaviour
     public void TargetOn(GameObject item)
     {
         target = item;
-        simpleScale.target = target;
-        simpleScale.Scale = target.transform.localScale;
+        simpleScale.Settarget(item);
     }
 
-    public void UIActivate()
+    public void UIOnOff()
     {
-        if(!ReferenceEquals(target, null))
+        if (panel.activeSelf)
+        {
+            panel.SetActive(false);
+            target = null;
+        }
+        if (!ReferenceEquals(target, null))
         {
             panel.SetActive(true);
         }
+        
     }
 
-    public void UIDeActivate()
-    {
-        panel.SetActive(false);
-        target = null;
-    }
 }

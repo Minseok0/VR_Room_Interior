@@ -22,19 +22,9 @@ public class MaterialMaker : MonoBehaviour
     {
         material = matBall.GetComponent<MeshRenderer>().material;
         material.SetColor("_Color",Color.white);
-        matColor = material.color;
-        sliderR.value = matColor.r;
-        sliderG.value = matColor.g;
-        sliderB.value = matColor.b;
-    }
-    private void Update()
-    {
-        if (material.GetColor("_Color").r != sliderR.value / 255)
-            ChangeColorR(sliderR);
-        if (material.GetColor("_Color").g != sliderG.value / 255)
-            ChangeColorR(sliderG);
-        if (material.GetColor("_Color").b != sliderB.value / 255)
-            ChangeColorR(sliderB);
+        sliderR.value = material.color.r;
+        sliderG.value = material.color.g;
+        sliderB.value = material.color.b;
     }
     // Start is called before the first frame update
     public void GenerateMatball()
@@ -52,38 +42,40 @@ public class MaterialMaker : MonoBehaviour
 
     public void IncreaseValue(Slider Slider)
     {
-        if(Slider.value < 255)
-            Slider.value+=1;
+        if (Slider.value <= 254)
+            Slider.value += 1;
+        else
+            Slider.value = 255;
+        ColorChange();
     }
 
     public void decreaseValue(Slider Slider)
     {
         if (Slider.value > 0)
-            Slider.value-=1;
+            Slider.value -= 1;
+        else
+            Slider.value = 0;
+        ColorChange();
     }
 
-    public void ChangeColorR(Slider Slider)
+    public void ColorChange()
     {
-        TextMeshProUGUI tmp = Slider.GetComponentInChildren<TextMeshProUGUI>();
-        matColor.r = Slider.value/255;
-        material.SetColor("_Color",matColor);
-        tmp.SetText(Slider.value.ToString());
-        previewImage.material.color = matColor;
+        material.color = new Color(sliderR.value/255, sliderG.value/255, sliderB.value / 255);
+        previewImage.material.color = material.color; 
+        sliderR.GetComponentInChildren<TextMeshProUGUI>().SetText(sliderR.value.ToString());
+        sliderG.GetComponentInChildren<TextMeshProUGUI>().SetText(sliderG.value.ToString());
+        sliderB.GetComponentInChildren<TextMeshProUGUI>().SetText(sliderB.value.ToString());
     }
-    public void ChangeColorG(Slider Slider)
+
+    public void PresetColorChange(Image img)
     {
-        TextMeshProUGUI tmp = Slider.GetComponentInChildren<TextMeshProUGUI>();
-        matColor.g = Slider.value/255;
-        material.SetColor("_Color", matColor);
-        tmp.SetText(Slider.value.ToString());
-        previewImage.material.color = matColor;
-    }
-    public void ChangeColorB(Slider Slider)
-    {
-        TextMeshProUGUI tmp = Slider.GetComponentInChildren<TextMeshProUGUI>();
-        matColor.b = Slider.value / 255;
-        material.SetColor("_Color", matColor);
-        tmp.SetText(Slider.value.ToString());
-        previewImage.material.color = matColor;
+        material.color = img.color;
+        previewImage.material.color = material.color;
+        sliderR.value = (int)(img.color.r * 255);
+        sliderG.value = (int)(img.color.g * 255);
+        sliderB.value = (int)(img.color.b * 255);
+        sliderR.GetComponentInChildren<TextMeshProUGUI>().SetText(sliderR.value.ToString());
+        sliderG.GetComponentInChildren<TextMeshProUGUI>().SetText(sliderG.value.ToString());
+        sliderB.GetComponentInChildren<TextMeshProUGUI>().SetText(sliderB.value.ToString());
     }
 }

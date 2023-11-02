@@ -112,4 +112,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 5375823897331133805}
   pivot: {x: 0, y: 0, z: 0}
-  newScale: {x: 2, y: 0.25, z: 1}
+  newScale: {x: 2.08, y: 0.25, z: 1.65}

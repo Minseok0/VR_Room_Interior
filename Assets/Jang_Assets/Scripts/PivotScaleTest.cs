@@ -8,16 +8,13 @@ public class PivotScaleTest : MonoBehaviour
     public Vector3 pivot;
     public Vector3 newScale;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
-    {
+    { 
+        
         ScaleAround(target, pivot, newScale);
+        
     }
 
     public void ScaleAround(GameObject target, Vector3 pivot, Vector3 newScale)
@@ -33,7 +30,7 @@ public class PivotScaleTest : MonoBehaviour
         Vector3 FP = B + C * RS;
 
         // finally, actually perform the scale/translation
-        target.transform.localScale = newScale;
+        target.transform.localScale = new Vector3(newScale.x / target.transform.root.localScale.x, newScale.y , newScale.z / target.transform.root.localScale.z);
         target.transform.localPosition = FP;
     }
 }

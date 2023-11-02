@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.48395744, g: 0.57573867, b: 0.68019843, a: 1}
+  m_IndirectSpecularColor: {r: 0.49010125, g: 0.57825, b: 0.68288016, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -35552,6 +35552,9 @@ MonoBehaviour:
   Scale: {x: 0, y: 0, z: 0}
   pivot: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  sliderX: {fileID: 0}
+  sliderY: {fileID: 0}
+  sliderZ: {fileID: 0}
   xtext: {fileID: 946367023}
   ytext: {fileID: 1493091496}
   ztext: {fileID: 313135742}

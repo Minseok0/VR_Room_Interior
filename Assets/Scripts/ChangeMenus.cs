@@ -37,4 +37,11 @@ public class ChangeMenus : MonoBehaviour
             idx++;
         menus[idx].SetActive(true);
     }
+
+    public void ChangeToEditMenu()
+    {
+        menus[idx].SetActive(false);
+        idx = 1;
+        menus[idx].SetActive(true);
+    }
 }

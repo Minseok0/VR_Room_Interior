@@ -30,7 +30,22 @@ public class GrabChecker : MonoBehaviour
     // if didn't add listener, set this method is public then add events at grab interactable's select in inspector 
     public void OnGrabEntered(SelectEnterEventArgs arg0)
     {
-        
+        if (arg0.interactorObject.transform.CompareTag("ObjectPlace"))
+        {
+            print("ObjectPlace");
+            if(arg0.interactableObject.transform.GetComponent<Collider>() != null)
+                arg0.interactableObject.transform.GetComponent<Collider>().isTrigger = true;
+            foreach (Transform child in arg0.interactableObject.transform)
+            {
+                // 자식 오브젝트의 Collider 컴포넌트를 가져옵니다.
+                Collider childCollider = child.GetComponent<Collider>();
+                if (childCollider != null)
+                    childCollider.isTrigger = true;
+            }
+            return;
+        }
+            
+
         parentGo.transform.position = transform.position;
         if (arg0.interactorObject is XRRayInteractor)
         {
@@ -50,6 +65,20 @@ public class GrabChecker : MonoBehaviour
 
     public void OnGrabExited(SelectExitEventArgs arg0)
     {
+        if (arg0.interactorObject.transform.CompareTag("ObjectPlace"))
+        {
+            print("ObjectPlace");
+            if (arg0.interactableObject.transform.GetComponent<Collider>() != null)
+                arg0.interactableObject.transform.GetComponent<Collider>().isTrigger = false;
+            foreach (Transform child in arg0.interactableObject.transform)
+            {
+                // 자식 오브젝트의 Collider 컴포넌트를 가져옵니다.
+                Collider childCollider = child.GetComponent<Collider>();
+                if(childCollider != null)
+                    childCollider.isTrigger = false;
+            }
+            return;
+        }
         parentGo.transform.position = transform.position;
         if (arg0.interactorObject is XRRayInteractor || arg0.interactorObject is XRSocketInteractor)
         {

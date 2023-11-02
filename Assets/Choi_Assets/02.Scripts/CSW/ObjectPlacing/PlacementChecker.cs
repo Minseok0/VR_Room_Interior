@@ -10,7 +10,6 @@ public class PlacementChecker : MonoBehaviour
     public int colliderCnt; 
 
     public int layerFloor; 
-    private const int IGNORE_RAYCAST_LAYER = 2;  // ignore_raycast 
 
     public Material originalMat;
     public Material RedFurniture;
@@ -20,26 +19,10 @@ public class PlacementChecker : MonoBehaviour
         //gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         layerFloor = LayerMask.NameToLayer("FLOOR");
         //colliderList = new List<Collider>();
-        originalMat = this.gameObject.GetComponent<MeshRenderer>().material;
+        originalMat = gameObject.GetComponent<MeshRenderer>().material;
         RedFurniture = RedFurniture != null ? RedFurniture : AssetDatabase.LoadAssetAtPath<Material>("Assets/Choi_Assets/Material/RedFurniture.mat");
     }
 
-    private void SetMaterial(Material mat)
-    {
-        this.GetComponent<MeshRenderer>().material = mat;
-
-        /*foreach (Transform tr_Child in this.transform)
-        {
-            Material[] newMaterials = new Material[tr_Child.GetComponent<MeshRenderer>().materials.Length];
-
-            for (int i = 0; i < newMaterials.Length; i++)
-            {
-                newMaterials[i] = mat;
-            }
-
-            tr_Child.GetComponent<MeshRenderer>().materials = newMaterials;
-        }*/
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -89,4 +72,10 @@ public class PlacementChecker : MonoBehaviour
             SetMaterial(originalMat);
     }
 
+    private void SetMaterial(Material mat)
+    {
+        var renderer= GetComponent<MeshRenderer>();
+        if(renderer != null)
+            renderer.material = mat;
+    }
 }

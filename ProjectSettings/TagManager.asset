@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Furniture
   - Inventory
+  - ObjectPlace
   layers:
   - Default
   - TransparentFX
